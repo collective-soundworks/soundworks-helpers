@@ -4,17 +4,6 @@ Set of common helpers for [`soundworks`](https://soundworks.dev) applications.
 
 *__WARNING: The `@soundworks/helpers` package targets `soundworks#v4` which is still under heavy development.__*
 
-<!-- toc -->
-
-- [Manual Installation](#manual-installation)
-- [API](#api)
-  * [Constants](#constants)
-  * [browserLauncher](#browserlauncher)
-  * [nodeLauncher](#nodelauncher)
-- [License](#license)
-
-<!-- tocstop -->
-
 ## Manual Installation
 
 Note that the `@soundworks/helpers` are automatically installed when creating an application using the `@soundworks/create` wizard, so most of the time you should not have to install this package manually. See [https://soundworks.dev/guides/getting-started.html](https://soundworks.dev/guides/getting-started.html) for more informations on the `soundworks` wizard.
