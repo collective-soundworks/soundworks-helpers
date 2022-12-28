@@ -40,18 +40,18 @@
     "toc": "markdown-toc -i README.md  --maxdepth 3"
   },
   "dependencies": {
-    "@ircam/eslint-config": "^1.1.0",
     "@ircam/simple-components": "^2.0.1",
     "@webcomponents/webcomponentsjs": "^2.4.3",
     "chalk": "^5.2.0",
     "core-js": "^3.22.3",
     "lit": "^2.2.2",
-    "markdown-toc": "^1.2.0",
     "regenerator-runtime": "^0.13.7",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
+    "@ircam/eslint-config": "^1.1.0",
     "jsdoc-to-readme": "^1.1.0",
+    "markdown-toc": "^1.2.0",
     "mkdirp": "^1.0.4",
     "puppeteer": "^19.1.2",
     "rimraf": "^3.0.2",
