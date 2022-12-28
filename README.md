@@ -2,7 +2,7 @@
 
 Set of common helpers for [`soundworks`](https://soundworks.dev) applications.
 
-_WARNING_: The `@soundworks/helpers` target `soundworks#v4` which is still under heavy development.
+*__WARNING: The `@soundworks/helpers` package targets `soundworks#v4` which is still under heavy development.__*
 
 <!-- toc -->
 
