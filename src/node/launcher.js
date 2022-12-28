@@ -3,8 +3,6 @@ import { fileURLToPath } from 'node:url';
 
 import chalk from 'chalk';
 
-let _bootstrap = null;
-
 function forkRestartableProcess(modulePath) {
   const child = fork(modulePath, ['child'], {});
   child.on('exit', () => forkRestartableProcess(modulePath));
@@ -36,8 +34,6 @@ const nodeLauncher = {
     numClients = 1,
     moduleURL = null,
   } = {}) {
-    _bootstrap = bootstrap;
-
     if (!Number.isInteger(numClients)) {
       throw new Error('[launcher] `numClients` options is mandatory and should be an integer');
     }

@@ -138,13 +138,13 @@ class SwSPluginPosition extends LitElement {
       this.x = positions[0].x;
       this.y = positions[0].y;
 
-      if (this.requestUpdate) {
+      if (requestUpdate) {
         this.requestUpdate();
       }
     }
   }
 
-  setPluginPosition(eventName) {
+  setPluginPosition() {
     this.plugin.setPosition(this.x, this.y);
   }
 }

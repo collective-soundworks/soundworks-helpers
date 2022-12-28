@@ -1,5 +1,4 @@
 import { html, render } from 'lit/html.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 // i18n
 import en from './i18n/en.js';
 import fr from './i18n/fr.js';
@@ -119,7 +118,7 @@ const browserLauncher = {
           const unsubscribe = client.pluginManager.onStateChange(plugins => {
             unsubscribe();
 
-            for (let [id, plugin] of Object.entries(plugins)) {
+            for (let [_id, plugin] of Object.entries(plugins)) {
               if (plugin.type === 'PluginPlatform') {
                 platforms.push(plugin);
                 resolve();
@@ -255,7 +254,7 @@ const browserLauncher = {
 
     const $launcher = document.querySelector(`#${launcherId}`);
 
-    client.pluginManager.onStateChange(async (plugins, updatedPlugin) => {
+    client.pluginManager.onStateChange(async (plugins, _updatedPlugin) => {
       const languageData = this._languageData[this._language];
 
       // then check if we have some platform plugin registered
