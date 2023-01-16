@@ -6,22 +6,22 @@
     <meta name="theme-color" content="#000000">
 
     <title>
-      ${d.app.name} | ${d.clientType}
+      ${d.app.name} | ${d.role}
     </title>
 
     <script>
-      window.soundworksConfig = JSON.parse('${JSON.stringify(d)}');
+      window.SOUNDWORKS_CONFIG = JSON.parse('${JSON.stringify(d)}');
     </script>
 
     ${
       (d.env.type === 'production')
-        ? `<script defer src="${d.env.subpath ? `/${d.env.subpath}` : ''}/build/${d.clientType}.min.js"></script>`
-        : `<script defer src="${d.env.subpath ? `/${d.env.subpath}` : ''}/build/${d.clientType}.js"></script>`
+        ? `<script defer src="${d.env.subpath ? `/${d.env.subpath}` : ''}/build/${d.role}.min.js"></script>`
+        : `<script defer src="${d.env.subpath ? `/${d.env.subpath}` : ''}/build/${d.role}.js"></script>`
     }
 
     <link rel="stylesheet" href="${d.env.subpath ? `/${d.env.subpath}` : ''}/build/css/normalize.css">
     <link rel="stylesheet" href="${d.env.subpath ? `/${d.env.subpath}` : ''}/build/css/app.css">
   </head>
 
-  <body class="loading ${d.clientType}"></body>
+  <body class="loading ${d.role}"></body>
 </html>

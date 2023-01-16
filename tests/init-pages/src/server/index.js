@@ -1,10 +1,16 @@
-import 'source-map-support/register';
+import '@soundworks/helpers/polyfills.js';
+import { Server } from '@soundworks/core/server.js';
+import platformInitPlugin from '@soundworks/plugin-platform-init/server.js';
 
-import { Server } from '@soundworks/core/server';
-import pluginPlatform from '@soundworks/plugin-platform/server.js';
-import pluginPosition from '@soundworks/plugin-position/server.js';
-// use `ENV=myconfigfile npm run dev` to run with a specific env config file
-import config from '../utils/load-config.js';
+import { loadConfig } from '../utils/load-config.js';
+import '../utils/catch-unhandled-errors.js';
+
+// - General documentation: https://soundworks.dev/
+// - API documentation:     https://soundworks.dev/api
+// - Issue Tracker:         https://github.com/collective-soundworks/soundworks/issues
+// - Wizard & Tools:        `npx soundworks`
+
+const config = loadConfig(process.env.ENV, import.meta.url);
 
 console.log(`
 --------------------------------------------------------
@@ -13,31 +19,17 @@ console.log(`
 --------------------------------------------------------
 `);
 
-// API documentation: https://collective-soundworks.github.io/soundworks/
+/**
+ * Create the soundworks server
+ */
 const server = new Server(config);
-// configure server for usage within soundworks template
-server.setDefaultTemplateConfig();
+// configure the server for usage within this application template
+server.useDefaultApplicationTemplate();
 
-// -------------------------------------------------------------------
-// register plugins
-// -------------------------------------------------------------------
-server.pluginManager.register('platform', pluginPlatform);
-
-server.pluginManager.register('position-default', pluginPosition);
-
-server.pluginManager.register('position-xrange', pluginPosition, {
-  xRange: [0.25, 0.75],
-  yRange: [0, 1],
-});
-
-server.pluginManager.register('position-yrange', pluginPosition, {
-  xRange: [0, 1],
-  yRange: [0.25, 0.75],
-});
-
-server.pluginManager.register('position-background', pluginPosition, {
-  backgroundImage: 'images/seating-map.png',
-});
+/**
+ * Register plugins and schemas
+ */
+server.pluginManager.register('platform-init', platformInitPlugin);
 
 server.pluginManager.register('default-inited', (Plugin) => {
   return class DefaultPlugin extends Plugin {};
@@ -62,23 +54,27 @@ server.pluginManager.register('failing-plugin', (Plugin) => {
   return class FailingPlugin extends Plugin {};
 });
 
-// -------------------------------------------------------------------
-// register schemas
-// -------------------------------------------------------------------
-server.stateManager.registerSchema('router', {
-  context: {
-    type: 'string',
-    default: 'alpha',
-  },
-});
+// @todo - fix once PluginPosition is released
+// server.pluginManager.register('position-default', pluginPosition);
 
-try {
-  await server.start();
-} catch (err) {
-  console.error(err.stack);
-}
+// server.pluginManager.register('position-xrange', pluginPosition, {
+//   xRange: [0.25, 0.75],
+//   yRange: [0, 1],
+// });
 
-process.on('unhandledRejection', (reason, p) => {
-  console.log('> Unhandled Promise Rejection');
-  console.log(reason);
-});
+// server.pluginManager.register('position-yrange', pluginPosition, {
+//   xRange: [0, 1],
+//   yRange: [0.25, 0.75],
+// });
+
+// server.pluginManager.register('position-background', pluginPosition, {
+//   backgroundImage: 'images/seating-map.png',
+// });
+
+/**
+ * Launch application (init plugins, http server, etc.)
+ */
+await server.start();
+
+// and do your own stuff!
+

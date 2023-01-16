@@ -5,6 +5,6 @@ Thumbs.db
 vendors
 node_modules
 
-tests/init-pages-screenshots
+tests/screenshots
 
 .bak

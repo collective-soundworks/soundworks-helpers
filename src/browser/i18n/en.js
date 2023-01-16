@@ -4,7 +4,7 @@ export default {
     defaultInited: 'Initializing', // ${plugin.id}
     defaultErrored: 'An error occured while initializing', // ${plugin.id}
   },
-  PluginPlatform: {
+  PluginPlatformInit: {
     initializing: 'Initializing...',
     click: 'Click to start',
     activating: 'Activating...',

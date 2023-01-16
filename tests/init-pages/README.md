@@ -1,33 +1,111 @@
-# `soundworks-template`
+# `init-pages`
 
-> Project template for developing [*soundworks*](https://github.com/collective-soundworks/soundworks/) applications.
+Thanks for using soundworks!
 
-_For a complete documentation of *soundworks*, please refer to [http://collective-soundworks.github.io](http://collective-soundworks.github.io)_
+If you are developping an appliction using `soundworks`, let us know by filling a comment there [https://github.com/collective-soundworks/soundworks/discussions/61](https://github.com/collective-soundworks/soundworks/discussions/61)
 
-## Creating a new application
+## Links
 
-```sh
-git clone https://github.com/collective-soundworks/soundworks-template.git my-application
-cd my-application
-rm -Rf .git
-npm install
+- [General Documentation / Tutorials](https://soundworks.dev/)
+- [API](https://soundworks.dev/api)
+- [Examples](https://github.com/collective-soundworks/soundworks-examples)
+- [Issue Tracker](https://github.com/collective-soundworks/soundworks/issues)
+- [Working with Max/MSP](https://github.com/collective-soundworks/soundworks-max)
+
+## Soundworks wizard
+
+The soundworks wizard is a interactive command line tool that gives you access to a bunch of high-level functionnalities, such as:
+- configure and create new clients
+- install / uninstall plugins and related libraries
+- find some documentation
+- create environment config files
+- etc.
+
+```bash
+npx soundworks
+```
+
+## Available npm scripts
+
+#### `npm run dev`
+
+Launch the application in development mode. Watch file system, transpile and bundle files on change (i.e. when a source file is saved), and restart the server when needed.
+
+#### `npm run build`
+
+Build the application. Transpile and bundle the source code without launching the server.
+
+#### `npm run build:prod`
+
+Build the application for production. Same as `npm run build` but additionally creates minified files for browser clients.
+
+#### `npm run start`
+
+Launch the server without rebuilding the application. Basically a shortcut for `node ./.build/server/index.js`.
+
+#### `npm run watch [name]` _(node clients only)_
+
+Launch the `[name]` client and restart when the sources are updated. 
+
+For example, if you are developping an application with a node client, you should run the `dev` script (to build the source and start the server) in one terminal:
+
+```bash
 npm run dev
 ```
 
-## Internal tools
+And launch and watch the node client(s) (e.g. called `thing`) in another terminal:
 
-### `@soundworks/template-build`
+```bash
+npm run watch thing
+```
 
-The [`@soundworks/template-build`](https://github.com/collective-soundworks/soundworks-template-build) package contains all the build scripts for the `soundworks-template`
+## Environment variables
 
-### `@soundworks/template-helpers`
+#### `ENV`
 
-The [`@soundworks/template-helpers`](https://github.com/collective-soundworks/soundworks-template-helpers) package contains common helpers (views, etc.) shared by most the applications.
+Define which environment config file should be used to run the application. Environment config files are located in the `/config/env` directory. 
 
-## Browser support
+For example, given the following config files:
 
-In version 3.1.0: the `soundworks-template` aims at supporting all major evergreen browsers and iOS Safari >= 9.3.5
+```
+├─ config
+│  ├─ env
+│  │  ├─ default.js
+│  │  └─ prod.js   
+```
+
+To start the server the `/config/env/prod.js` configuration file, you should run:
+
+```bash
+ENV=prod npm run start
+``` 
+
+By default, the `/config/env/default.json` configuration file is used.
+
+#### `PORT`
+
+Override the port defined in the config file. 
+
+For example, to launch the server on port `3000` whatever the `port` value defined in the default configuration file, you should run:
+
+```bash
+PORT=3000 npm run start
+```
+
+#### `EMULATE` _(node clients only)_
+
+Run several node client instances in parallel in the same terminal window. 
+
+For example, to launch 4 instances of the client `thing` in parallel (each client instance being run inside its own `fork`), you should run:
+
+```bash
+EMULATE=4 npm run watch:process thing
+```
+
+## Credits
+
+[soundworks](https://soundworks.dev) is a framework developped by the ISMM team at Ircam
 
 ## License
 
-BSD-3-Clause
+[BSD-3-Clause](./LICENSE)

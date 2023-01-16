@@ -1,14 +1,10 @@
 {
-  name: 'soundworks',
-  author: 'the author',
-
+  name: 'Check init screens',
+  author: '',
   clients: {
     player: {
       target: 'browser',
-      default: true
-    },
-    controller: {
-      target: 'browser',
+      default: true,
     },
   },
 }

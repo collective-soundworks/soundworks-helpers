@@ -5,7 +5,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import './sw-header.js';
 import './sw-plugin-error.js';
 
-class SwPluginPlatform extends LitElement {
+class SwPluginPlatformInit extends LitElement {
   static get properties() {
     return {
       plugin: { hasChanged: () => true, attribute: false },
@@ -109,4 +109,4 @@ class SwPluginPlatform extends LitElement {
   }
 }
 
-customElements.define('sw-plugin-platform', SwPluginPlatform);
+customElements.define('sw-plugin-platform-init', SwPluginPlatformInit);

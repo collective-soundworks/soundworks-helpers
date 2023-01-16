@@ -4,7 +4,7 @@ import en from './i18n/en.js';
 import fr from './i18n/fr.js';
 // views
 import './components/sw-launcher.js';
-import './components/sw-plugin-platform.js';
+import './components/sw-plugin-platform-init.js';
 import './components/sw-plugin-position.js';
 import './components/sw-plugin-default.js';
 
@@ -110,8 +110,8 @@ const browserLauncher = {
       const $containers = $container.querySelectorAll('.emulated-client-container');
       Array.from($containers).forEach($container => bootstrap($container));
 
-      // check if platform plugins have been registered
-      const platforms = [];
+      // check if @soundworks/plugin-platform-init plugins have been registered
+      const platformInitPlugins = [];
 
       await new Promise((resolve) => {
         this._clients.forEach(client => {
@@ -119,8 +119,8 @@ const browserLauncher = {
             unsubscribe();
 
             for (let [_id, plugin] of Object.entries(plugins)) {
-              if (plugin.type === 'PluginPlatform') {
-                platforms.push(plugin);
+              if (plugin.type === 'PluginPlatformInit') {
+                platformInitPlugins.push(plugin);
                 resolve();
               }
             }
@@ -129,19 +129,19 @@ const browserLauncher = {
       });
 
       // if platform plugins found, show the big "rule them all" button
-      if (platforms.length > 0) {
+      if (platformInitPlugins.length > 0) {
         const $startButton = $container.querySelector('.emulated-clients-init-all');
         $startButton.style.display = 'block';
 
-        function initPlatforms(e) {
-          platforms.forEach(platform => platform.onUserGesture(e));
+        function launchPlatformInitPlugins(e) {
+          platformInitPlugins.forEach(plugin => plugin.onUserGesture(e));
 
-          $startButton.removeEventListener('click', initPlatforms);
+          $startButton.removeEventListener('click', launchPlatformInitPlugins);
           $startButton.remove();
           // numClients
         }
 
-        $startButton.addEventListener('click', initPlatforms);
+        $startButton.addEventListener('click', launchPlatformInitPlugins);
       }
     } else {
       bootstrap($container);
@@ -184,7 +184,7 @@ const browserLauncher = {
     reloadOnSocketError = true,
   } = {}) {
     // record the clients into the launcher, so that we can click / initialize
-    // them all at once if needed, i.e. if the platform plugin is registered
+    // them all at once if needed, i.e. if the PlatformInit plugin is registered
     this._clients.add(client);
 
     if (!(initScreensContainer instanceof HTMLElement)) {
@@ -258,25 +258,25 @@ const browserLauncher = {
       const languageData = this._languageData[this._language];
 
       // then check if we have some platform plugin registered
-      let platform = null;
+      let platformInit = null;
 
       for (let instance of Object.values(plugins)) {
-        if (instance.type === 'PluginPlatform') {
-          platform = instance;
+        if (instance.type === 'PluginPlatformInit') {
+          platformInit = instance;
         }
       }
 
-      if (platform && platform.status !== 'started') {
-        const pluginTexts = languageData['PluginPlatform'];
+      if (platformInit && platformInit.status !== 'started') {
+        const pluginTexts = languageData['PluginPlatformInit'];
         const common = languageData.common;
         const localizedTexts = Object.assign({}, pluginTexts, common);
 
         $launcher.setScreen(html`
-          <sw-plugin-platform
+          <sw-plugin-platform-init
             localized-texts="${JSON.stringify(localizedTexts)}"
             .client="${client}"
-            .plugin="${platform}"
-          ></sw-plugin-platform>
+            .plugin="${platformInit}"
+          ></sw-plugin-platform-init>
         `);
 
         return;

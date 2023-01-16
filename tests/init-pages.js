@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { fork, execSync } from 'node:child_process';
 
@@ -15,13 +16,22 @@ console.log(`
 ----------------------------------------------------------------------------------------
 >
 > This test takes screenshots of a quite complete set of the possible laucnher screens.
-> Screenshots will be stored in the "tests/init-pages-screenshots" directory.
+> Screenshots will be stored in the "tests/screenshots" directory.
 >
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
 `);
 
-console.log('+ rebuild app');
+if (!fs.existsSync(path.join(appPath, 'node_modules'))) {
+  console.log('> Installing deps');
+
+  execSync('npm install', {
+    cwd: appPath,
+    stdio: 'inherit',
+  });
+}
+
+console.log('> Building app');
 
 execSync('npm run build', {
   cwd: appPath,
@@ -51,7 +61,7 @@ execSync('npm run build', {
 
 // test platform
 async function capturePlaformScreenshots() {
-  const screenshots = path.join(process.cwd(), 'tests', 'init-pages-screenshots');
+  const screenshots = path.join(process.cwd(), 'tests', 'screenshots');
 
   rimraf.sync(screenshots);
   mkdirp.sync(screenshots);
@@ -80,7 +90,7 @@ async function capturePlaformScreenshots() {
 
         // activation error needs a click
         if (testCase === 'platform-errored-2') {
-          const btn = await (await page.evaluateHandle(`document.querySelector('sw-launcher').shadowRoot.querySelector('sw-plugin-platform').shadowRoot.querySelector('div')`)).asElement();
+          const btn = await (await page.evaluateHandle(`document.querySelector('sw-launcher').shadowRoot.querySelector('sw-plugin-platform-init').shadowRoot.querySelector('div')`)).asElement();
           await btn.click();
           await new Promise(resolve => setTimeout(resolve, 100));
         }
@@ -94,31 +104,31 @@ async function capturePlaformScreenshots() {
     // ----------------------------------------------------
     // position screens screenshots
     // ----------------------------------------------------
-    for (let lang of ['en', 'fr']) {
-      for (let testCase of ['position-default', 'position-xrange', 'position-yrange', 'position-background']) {
-        const name = `${testCase}-${orientation}-${lang}`;
-        console.log(`>> ${name}`);
+    // for (let lang of ['en', 'fr']) {
+    //   for (let testCase of ['position-default', 'position-xrange', 'position-yrange', 'position-background']) {
+    //     const name = `${testCase}-${orientation}-${lang}`;
+    //     console.log(`>> ${name}`);
 
-        await page.goto(`http://127.0.0.1:8000?case=${testCase}&lang=${lang}`);
-        await new Promise(resolve => setTimeout(resolve, 200));
+    //     await page.goto(`http://127.0.0.1:8000?case=${testCase}&lang=${lang}`);
+    //     await new Promise(resolve => setTimeout(resolve, 200));
 
-        // take unclicked screenshot
-        await page.screenshot({
-          path: path.join(screenshots, `${name}-before-click.png`),
-        });
+    //     // take unclicked screenshot
+    //     await page.screenshot({
+    //       path: path.join(screenshots, `${name}-before-click.png`),
+    //     });
 
-        // should be goo in al cases
-        page.mouse.move(375 / 2, 375 / 2);
-        page.mouse.down();
-        // take clicked screenshot
-        // const btn = await (await page.evaluateHandle(`document.querySelector('sw-launcher').shadowRoot.querySelector('sw-plugin-position').shadowRoot.querySelector('div')`)).asElement();
-        // await btn.click(`.has-listener`);
+    //     // should be goo in al cases
+    //     page.mouse.move(375 / 2, 375 / 2);
+    //     page.mouse.down();
+    //     // take clicked screenshot
+    //     // const btn = await (await page.evaluateHandle(`document.querySelector('sw-launcher').shadowRoot.querySelector('sw-plugin-position').shadowRoot.querySelector('div')`)).asElement();
+    //     // await btn.click(`.has-listener`);
 
-        await page.screenshot({
-          path: path.join(screenshots, `${name}-clicked.png`),
-        });
-      }
-    }
+    //     await page.screenshot({
+    //       path: path.join(screenshots, `${name}-clicked.png`),
+    //     });
+    //   }
+    // }
 
     // ----------------------------------------------------
     // default screens screenshots
