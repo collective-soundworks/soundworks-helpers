@@ -5,7 +5,8 @@ import fr from './i18n/fr.js';
 // views
 import './components/sw-launcher.js';
 import './components/sw-plugin-platform-init.js';
-import './components/sw-plugin-position.js';
+// bypass plugin position for now, plugin views should live in plugins
+// import './components/sw-plugin-position.js';
 import './components/sw-plugin-default.js';
 
 /**

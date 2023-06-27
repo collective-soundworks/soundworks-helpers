@@ -1,7 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 
-import '@ircam/simple-components/sc-dot-map.js';
-import '@ircam/simple-components/sc-button.js';
+import '@ircam/sc-components/sc-dot-map.js';
+import '@ircam/sc-components/sc-button.js';
 
 class SwSPluginPosition extends LitElement {
   static get properties() {

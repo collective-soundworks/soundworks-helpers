@@ -15,7 +15,7 @@ console.log(`
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
 >
-> This test takes screenshots of a quite complete set of the possible laucnher screens.
+> This test takes screenshots of a quite complete set of the possible launcher screens.
 > Screenshots will be stored in the "tests/screenshots" directory.
 >
 ----------------------------------------------------------------------------------------
