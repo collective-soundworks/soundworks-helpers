@@ -1,6 +1,6 @@
 {
   "name": "@soundworks/helpers",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "description": "Set of generic helpers for soundworks applications",
   "authors": [
     "Benjamin Matuszewski"
