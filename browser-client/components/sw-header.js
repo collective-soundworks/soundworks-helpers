@@ -44,4 +44,6 @@ class SwAppHeader extends LitElement {
   }
 }
 
-customElements.define('sw-header', SwAppHeader);
+if (customElements.get('sw-header') === undefined) {
+  customElements.define('sw-header', SwAppHeader);
+}

@@ -92,4 +92,6 @@ class SwPluginDefault extends LitElement {
   }
 }
 
-customElements.define('sw-plugin-default', SwPluginDefault);
+if (customElements.get('sw-plugin-default') === undefined) {
+  customElements.define('sw-plugin-default', SwPluginDefault);
+}

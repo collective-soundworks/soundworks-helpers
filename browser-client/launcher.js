@@ -4,10 +4,8 @@ import en from './i18n/en.js';
 import fr from './i18n/fr.js';
 // views
 import './components/sw-launcher.js';
-import './components/sw-plugin-platform-init.js';
-// bypass plugin position for now, plugin views should live in plugins
-// import './components/sw-plugin-position.js';
 import './components/sw-plugin-default.js';
+import './components/sw-plugin-error.js';
 
 /**
  * Launcher for clients running in browser runtime.
@@ -90,6 +88,7 @@ const browserLauncher = {
           box-shadow: 0px 0px 2px 0px #787878;
         }
       `;
+
       document.querySelector('head').appendChild(style);
 
       // we need to do this first to have access to the clients
@@ -262,7 +261,7 @@ const browserLauncher = {
       let platformInit = null;
 
       for (let instance of Object.values(plugins)) {
-        if (instance.type === 'PluginPlatformInit') {
+        if (instance.type === 'PluginPlatformInitClient') {
           platformInit = instance;
         }
       }
@@ -286,7 +285,8 @@ const browserLauncher = {
       let position = null;
 
       for (let instance of Object.values(plugins)) {
-        if (instance.type === 'PluginPosition') {
+        console.log(instance.type);
+        if (instance.type === 'PluginPositionClient') {
           position = instance;
         }
       }

@@ -12,13 +12,13 @@
   "type": "module",
   "exports": {
     "./launcher.js": {
-      "module": "./src/browser/launcher.js",
-      "node": "./src/node/launcher.js",
+      "module": "./browser-client/launcher.js",
+      "node": "./node-client/launcher.js",
       "types": "./types/launcher.js"
     },
     "./polyfills.js": {
-      "node": "./src/node/polyfills.js",
-      "default": "./src/browser/polyfills.js"
+      "node": "./node-client/polyfills.js",
+      "default": "./browser-client/polyfills.js"
     }
   },
   "repository": {
@@ -33,7 +33,7 @@
     "soundworks"
   ],
   "scripts": {
-    "api": "jsdoc-to-readme --src src/browser/launcher.js src/node/launcher.js",
+    "api": "jsdoc-to-readme --src browser-client/launcher.js node-client/launcher.js",
     "lint": "npx eslint src && npx eslint tests",
     "preversion": "npm run api && git commit --allow-empty -am 'doc: update readme'",
     "test": "node tests/init-pages.js",

@@ -62,4 +62,6 @@ class SwPluginError extends LitElement {
   }
 }
 
-customElements.define('sw-plugin-error', SwPluginError);
+if (customElements.get('sw-plugin-error') === undefined) {
+  customElements.define('sw-plugin-error', SwPluginError);
+}

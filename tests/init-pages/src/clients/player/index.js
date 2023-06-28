@@ -1,8 +1,9 @@
 import '@soundworks/helpers/polyfills.js';
 import { Client } from '@soundworks/core/client.js';
-import platformInitPlugin from '@soundworks/plugin-platform-init/client.js';
+import pluginPlatformInit from '@soundworks/plugin-platform-init/client.js';
+import pluginPosition from '@soundworks/plugin-position/client.js';
 
-import launcher from '../../../../../src/browser/launcher.js';
+import launcher from '../../../../../browser-client/launcher.js';
 
 // - General documentation: https://soundworks.dev/
 // - API documentation:     https://soundworks.dev/api
@@ -21,10 +22,10 @@ const audioContext = new AudioContext();
 const searchParams = new URLSearchParams(window.location.search);
 
 const lang = searchParams.get('lang') || 'en'
-const testCase = searchParams.get('case') || 'platform-1';
+const testCase = searchParams.get('case') || 'platform-inited';
 
 console.log('> configure the view you want to test with:');
-console.log('> http://127.0.0.1:8000?lang=fr&case=platform-1');
+console.log('> http://127.0.0.1:8000?lang=fr&case=platform-inited');
 
 async function main($container) {
   /**
@@ -39,18 +40,18 @@ async function main($container) {
   // register plugins
   // -------------------------------------------------------------------
   if (testCase.startsWith('platform')) {
-    client.pluginManager.register('platform-init', platformInitPlugin, { audioContext });
+    client.pluginManager.register('platform-init', pluginPlatformInit, { audioContext });
   }
 
-  // if (testCase === 'position-default') {
-  //   client.pluginManager.register('position-default', pluginPosition);
-  // } else if (testCase === 'position-xrange') {
-  //   client.pluginManager.register('position-xrange', pluginPosition);
-  // } else if (testCase === 'position-yrange') {
-  //   client.pluginManager.register('position-yrange', pluginPosition);
-  // } else if (testCase === 'position-background') {
-  //   client.pluginManager.register('position-background', pluginPosition);
-  // }
+  if (testCase === 'position-default') {
+    client.pluginManager.register('position-default', pluginPosition);
+  } else if (testCase === 'position-xrange') {
+    client.pluginManager.register('position-xrange', pluginPosition);
+  } else if (testCase === 'position-yrange') {
+    client.pluginManager.register('position-yrange', pluginPosition);
+  } else if (testCase === 'position-background') {
+    client.pluginManager.register('position-background', pluginPosition);
+  }
 
   if (testCase === 'default-inited') {
     client.pluginManager.register('default-inited', (Plugin) => {

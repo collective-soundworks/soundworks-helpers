@@ -104,31 +104,33 @@ async function capturePlaformScreenshots() {
     // ----------------------------------------------------
     // position screens screenshots
     // ----------------------------------------------------
-    // for (let lang of ['en', 'fr']) {
-    //   for (let testCase of ['position-default', 'position-xrange', 'position-yrange', 'position-background']) {
-    //     const name = `${testCase}-${orientation}-${lang}`;
-    //     console.log(`>> ${name}`);
+    for (let lang of ['en', 'fr']) {
+      for (let testCase of ['position-default', 'position-xrange', 'position-yrange', 'position-background']) {
+        const name = `${testCase}-${orientation}-${lang}`;
+        console.log(`>> ${name}`);
 
-    //     await page.goto(`http://127.0.0.1:8000?case=${testCase}&lang=${lang}`);
-    //     await new Promise(resolve => setTimeout(resolve, 200));
+        await page.goto(`http://127.0.0.1:8000?case=${testCase}&lang=${lang}`);
+        await new Promise(resolve => setTimeout(resolve, 200));
 
-    //     // take unclicked screenshot
-    //     await page.screenshot({
-    //       path: path.join(screenshots, `${name}-before-click.png`),
-    //     });
+        // take unclicked screenshot
+        await page.screenshot({
+          path: path.join(screenshots, `${name}-before-click.png`),
+        });
 
-    //     // should be goo in al cases
-    //     page.mouse.move(375 / 2, 375 / 2);
-    //     page.mouse.down();
-    //     // take clicked screenshot
-    //     // const btn = await (await page.evaluateHandle(`document.querySelector('sw-launcher').shadowRoot.querySelector('sw-plugin-position').shadowRoot.querySelector('div')`)).asElement();
-    //     // await btn.click(`.has-listener`);
+        // doesn't work anymore for some reason...
+        // // should be goo in al cases
+        // // page.mouse.move();
+        // page.mouse.click(375 / 2, 375 / 2);
+        // await new Promise(resolve => setTimeout(resolve, 100));
+        // // take clicked screenshot
+        // // const btn = await (await page.evaluateHandle(`document.querySelector('sw-launcher').shadowRoot.querySelector('sw-plugin-position').shadowRoot.querySelector('div')`)).asElement();
+        // // await btn.click(`.has-listener`);
 
-    //     await page.screenshot({
-    //       path: path.join(screenshots, `${name}-clicked.png`),
-    //     });
-    //   }
-    // }
+        // await page.screenshot({
+        //   path: path.join(screenshots, `${name}-clicked.png`),
+        // });
+      }
+    }
 
     // ----------------------------------------------------
     // default screens screenshots

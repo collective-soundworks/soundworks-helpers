@@ -21,7 +21,8 @@
   "dependencies": {
     "@soundworks/core": "^4.0.0-alpha.0",
     "@soundworks/helpers": "^1.0.0-alpha.2",
-    "@soundworks/plugin-platform-init": "^1.0.0-alpha.1",
+    "@soundworks/plugin-platform-init": "^1.0.0-alpha.3",
+    "@soundworks/plugin-position": "^2.0.0-alpha.0",
     "json5": "^2.2.2",
     "lit": "^2.2.2"
   },

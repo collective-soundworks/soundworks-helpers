@@ -1,6 +1,7 @@
 import '@soundworks/helpers/polyfills.js';
 import { Server } from '@soundworks/core/server.js';
 import platformInitPlugin from '@soundworks/plugin-platform-init/server.js';
+import pluginPosition from '@soundworks/plugin-position/server.js';
 
 import { loadConfig } from '../utils/load-config.js';
 import '../utils/catch-unhandled-errors.js';
@@ -54,22 +55,21 @@ server.pluginManager.register('failing-plugin', (Plugin) => {
   return class FailingPlugin extends Plugin {};
 });
 
-// @todo - fix once PluginPosition is released
-// server.pluginManager.register('position-default', pluginPosition);
+server.pluginManager.register('position-default', pluginPosition);
 
-// server.pluginManager.register('position-xrange', pluginPosition, {
-//   xRange: [0.25, 0.75],
-//   yRange: [0, 1],
-// });
+server.pluginManager.register('position-xrange', pluginPosition, {
+  xRange: [0.25, 0.75],
+  yRange: [0, 1],
+});
 
-// server.pluginManager.register('position-yrange', pluginPosition, {
-//   xRange: [0, 1],
-//   yRange: [0.25, 0.75],
-// });
+server.pluginManager.register('position-yrange', pluginPosition, {
+  xRange: [0, 1],
+  yRange: [0.25, 0.75],
+});
 
-// server.pluginManager.register('position-background', pluginPosition, {
-//   backgroundImage: 'images/seating-map.png',
-// });
+server.pluginManager.register('position-background', pluginPosition, {
+  backgroundImage: 'images/seating-map.png',
+});
 
 /**
  * Launch application (init plugins, http server, etc.)
