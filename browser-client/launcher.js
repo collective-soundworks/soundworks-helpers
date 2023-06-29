@@ -285,7 +285,6 @@ const browserLauncher = {
       let position = null;
 
       for (let instance of Object.values(plugins)) {
-        console.log(instance.type);
         if (instance.type === 'PluginPositionClient') {
           position = instance;
         }
@@ -322,7 +321,6 @@ const browserLauncher = {
         return;
       } else {
         // pick the first non started plugin and push it in default view
-        // console.log('show plugins defaults init screens');
         let plugin = null;
 
         for (let instance of Object.values(plugins)) {
