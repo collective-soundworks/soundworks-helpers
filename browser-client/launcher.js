@@ -111,22 +111,24 @@ const browserLauncher = {
       Array.from($containers).forEach($container => bootstrap($container));
 
       // check if @soundworks/plugin-platform-init plugins have been registered
-      const platformInitPlugins = [];
-
-      await new Promise((resolve) => {
-        this._clients.forEach(client => {
+      const platformInitPromises = Array.from(this._clients).map((client, index) => {
+        return new Promise(resolve => {
           const unsubscribe = client.pluginManager.onStateChange(plugins => {
             unsubscribe();
 
             for (let [_id, plugin] of Object.entries(plugins)) {
-              if (plugin.type === 'PluginPlatformInit') {
-                platformInitPlugins.push(plugin);
-                resolve();
+              if (plugin.type === 'PluginPlatformInitClient') {
+                resolve(plugin);
               }
             }
+
+            resolve(null);
           });
         });
       });
+
+      const pluginOrNull = await Promise.all(platformInitPromises);
+      const platformInitPlugins = pluginOrNull.filter(e => e !== null);
 
       // if platform plugins found, show the big "rule them all" button
       if (platformInitPlugins.length > 0) {
