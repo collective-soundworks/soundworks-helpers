@@ -50,9 +50,9 @@ e.g. `http://127.0.0.1:8000?emulate=10` to run 10 clients in parallel
 *   `bootstrap` **[Function][12]** Bootstrap function to execute.
 *   `options` **[object][13]** Configuration object. (optional, default `{}`)
 
-    *   `options.numClients` **[object][13]** Number of parallel clients. (optional, default `1`)
-    *   `options.width` **[object][13]** If numClient > 1, width of the container. (optional, default `'20%'`)
-    *   `options.height` **[object][13]** If numClient > 1, height of the container. (optional, default `'599px'`)
+    *   `options.numClients` **[number][14]** Number of parallel clients. (optional, default `1`)
+    *   `options.width` **[string][15]** If numClient > 1, width of the container. (optional, default `'20%'`)
+    *   `options.height` **[string][15]** If numClient > 1, height of the container. (optional, default `'500px'`)
 
 #### Examples
 
@@ -88,11 +88,11 @@ The launcher will do a bunch of stuff for you:
 *   `client` **[Function][12]** The soundworks client.
 *   `options` **[object][13]** Configuration object. (optional, default `{}`)
 
-    *   `options.initScreensContainer` **[object][13]** The HTML container for
-        the initialization screens. (optional, default `1`)
-    *   `options.reloadOnVisibilityChange` **[object][13]** Define if the client
+    *   `options.initScreensContainer` **[HTMLElement][16]** The HTML container for
+        the initialization screens. (optional, default `null`)
+    *   `options.reloadOnVisibilityChange` **[boolean][17]** Define if the client
         should reload on visibility change. (optional, default `true`)
-    *   `options.reloadOnSocketError` **[object][13]** Define if the client
+    *   `options.reloadOnSocketError` **[boolean][17]** Define if the client
         should reload on socket error and disconnection. (optional, default `true`)
 
 #### Examples
@@ -108,7 +108,7 @@ from the browser and fallback to english if not supported.
 
 For now, available languages are 'fr' and 'en'.
 
-Type: [string][14]
+Type: [string][15]
 
 ### setLanguageData
 
@@ -117,7 +117,7 @@ language as well as define a new one.
 
 #### Parameters
 
-*   `lang` **[string][14]** Key correspondig to the language (e.g. 'fr', 'en', 'es')
+*   `lang` **[string][15]** Key correspondig to the language (e.g. 'fr', 'en', 'es')
 *   `data` **[object][13]** Key/value pairs defining the text strings to be used.
 
 ### getLanguageData
@@ -126,7 +126,7 @@ Retrieve the data for a given language.
 
 #### Parameters
 
-*   `lang` **[string][14]** Key correspondig to the language (e.g. 'fr', 'en', 'es') (optional, default `null`)
+*   `lang` **[string][15]** Key correspondig to the language (e.g. 'fr', 'en', 'es') (optional, default `null`)
 
 ## nodeLauncher
 
@@ -149,8 +149,8 @@ e.g. `EMULATE=10 npm run watch-process thing` to run 10 clients side-by-side
 *   `bootstrap` **[Function][12]** Bootstrap function to execute.
 *   `options` **[object][13]** Configuration object. (optional, default `{}`)
 
-    *   `options.numClients` **[object][13]** Number of parallel clients. (optional, default `1`)
-    *   `options.moduleURL` **[object][13]** Module url of the calling filr. (optional, default `null`)
+    *   `options.numClients` **[number][14]** Number of parallel clients. (optional, default `1`)
+    *   `options.moduleURL` **[string][15]** Module url of the calling filr. (optional, default `null`)
 
 #### Examples
 
@@ -173,7 +173,7 @@ uncaught error occurs in the program.
 *   `client` **[Function][12]** The soundworks client.
 *   `options` **[object][13]** Configuration object. (optional, default `{}`)
 
-    *   `options.restartOnError` **[object][13]** Define if the client should
+    *   `options.restartOnError` **[boolean][17]** Define if the client should
         restart when on uncaught and socket errors. (optional, default `true`)
 
 #### Examples
@@ -208,7 +208,13 @@ launcher.register(client);
 
 [13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[16]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
 <!-- apistop -->
 

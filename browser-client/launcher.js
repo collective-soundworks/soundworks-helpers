@@ -28,9 +28,9 @@ const browserLauncher = {
    *
    * @param {Function} bootstrap - Bootstrap function to execute.
    * @param {object} options - Configuration object.
-   * @param {object} [options.numClients=1] - Number of parallel clients.
-   * @param {object} [options.width='20%'] - If numClient > 1, width of the container.
-   * @param {object} [options.height='599px'] - If numClient > 1, height of the container.
+   * @param {number} [options.numClients=1] - Number of parallel clients.
+   * @param {string} [options.width='20%'] - If numClient > 1, width of the container.
+   * @param {string} [options.height='500px'] - If numClient > 1, height of the container.
    * @example
    * launcher.execute(main, {
    *   numClients: parseInt(new URLSearchParams(window.location.search).get('emulate')) || 1,
@@ -173,11 +173,11 @@ const browserLauncher = {
    *
    * @param {Function} client - The soundworks client.
    * @param {object} options - Configuration object.
-   * @param {object} [options.initScreensContainer=1] - The HTML container for
+   * @param {HTMLElement} options.initScreensContainer - The HTML container for
    *  the initialization screens.
-   * @param {object} [options.reloadOnVisibilityChange=true] - Define if the client
+   * @param {boolean} [options.reloadOnVisibilityChange=true] - Define if the client
    *  should reload on visibility change.
-   * @param {object} [options.reloadOnSocketError=true] - Define if the client
+   * @param {boolean} [options.reloadOnSocketError=true] - Define if the client
    *  should reload on socket error and disconnection.
    * @example
    * launcher.register(client, { initScreensContainer: $container });

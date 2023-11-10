@@ -22,8 +22,8 @@ const nodeLauncher = {
    *
    * @param {Function} bootstrap - Bootstrap function to execute.
    * @param {object} options - Configuration object.
-   * @param {object} options.moduleURL - Module url of the calling filr.
-   * @param {object} [options.numClients=1] - Number of parallel clients.
+   * @param {string} options.moduleURL - Module url of the calling filr.
+   * @param {number} [options.numClients=1] - Number of parallel clients.
    * @example
    * launcher.execute(bootstrap, {
    *   numClients: process.env.EMULATE ? parseInt(process.env.EMULATE) : 1,
@@ -59,7 +59,7 @@ const nodeLauncher = {
    *
    * @param {Function} client - The soundworks client.
    * @param {object} options - Configuration object.
-   * @param {object} [options.restartOnError=true] - Define if the client should
+   * @param {boolean} [options.restartOnError=true] - Define if the client should
    *  restart when on uncaught and socket errors.
    * @example
    * launcher.register(client);
