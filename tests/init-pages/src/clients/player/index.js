@@ -5,6 +5,8 @@ import pluginPosition from '@soundworks/plugin-position/client.js';
 
 import launcher from '../../../../../browser-client/launcher.js';
 
+import { html, render } from 'lit';
+
 // - General documentation: https://soundworks.dev/
 // - API documentation:     https://soundworks.dev/api
 // - Issue Tracker:         https://github.com/collective-soundworks/soundworks/issues
@@ -15,8 +17,9 @@ import launcher from '../../../../../browser-client/launcher.js';
  */
 const config = window.SOUNDWORKS_CONFIG;
 
-
-// If multiple clients are emulated you want to share the same context
+/**
+ * If multiple clients are emulated you might to want to share some resources
+ */
 const audioContext = new AudioContext();
 
 const searchParams = new URLSearchParams(window.location.search);
@@ -28,9 +31,6 @@ console.log('> configure the view you want to test with:');
 console.log('> http://127.0.0.1:8000?lang=fr&case=platform-inited');
 
 async function main($container) {
-  /**
-   * Create the soundworks client
-   */
   const client = new Client(config);
 
 

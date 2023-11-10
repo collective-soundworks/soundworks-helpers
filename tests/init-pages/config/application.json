@@ -1,5 +1,5 @@
 {
-  name: 'Check init screens',
+  name: 'init-pages',
   author: '',
   clients: {
     player: {

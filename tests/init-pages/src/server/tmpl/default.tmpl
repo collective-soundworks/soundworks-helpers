@@ -14,7 +14,7 @@
     </script>
 
     ${
-      (d.env.type === 'production')
+      d.env.useMinifiedFile === true
         ? `<script defer src="${d.env.subpath ? `/${d.env.subpath}` : ''}/build/${d.role}.min.js"></script>`
         : `<script defer src="${d.env.subpath ? `/${d.env.subpath}` : ''}/build/${d.role}.js"></script>`
     }

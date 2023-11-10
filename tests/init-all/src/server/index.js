@@ -1,6 +1,6 @@
 import '@soundworks/helpers/polyfills.js';
 import { Server } from '@soundworks/core/server.js';
-import platformInitPlugin from '@soundworks/plugin-platform-init/server.js';
+import pluginPlatformInit from '@soundworks/plugin-platform-init/server.js';
 
 import { loadConfig } from '../utils/load-config.js';
 import '../utils/catch-unhandled-errors.js';
@@ -29,8 +29,7 @@ server.useDefaultApplicationTemplate();
 /**
  * Register plugins and schemas
  */
-server.pluginManager.register('platform-init', platformInitPlugin);
-// server.stateManager.registerSchema('my-schema', definition);
+server.pluginManager.register('platform-init', pluginPlatformInit);
 
 /**
  * Launch application (init plugins, http server, etc.)

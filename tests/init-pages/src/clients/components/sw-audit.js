@@ -12,57 +12,64 @@ function padLeft(value, size) {
 }
 
 /**
- * component for the soundworks internal audit state
+ * Component for the soundworks internal audit state
  */
 class SwAudit extends LitElement {
-  static get styles() {
-    return css`
-      :host > div {
-        background-color: var(--sw-light-background-color);
-        height: 100%;
-        padding: 0 20px;
-      }
-    `;
-  }
+  static styles = css`
+    :host > div {
+      background-color: var(--sw-light-background-color);
+      height: 100%;
+      padding: 0 20px;
+      overflow: hidden;
+    }
+  `;
 
   constructor() {
     super();
 
     this.client = null;
-    this.auditState = null;
-    this.numClientsString = '';
+    this._auditState = null;
+    this._numClientsString = '';
   }
 
-  async firstUpdated() {
-    this.auditState = await this.client.getAuditState();
-    this.auditState.onUpdate(updates => {
+  async connectedCallback() {
+    super.connectedCallback();
+
+    this._auditState = await this.client.getAuditState();
+    this._auditState.onUpdate(updates => {
       if ('numClients' in updates) {
         const numClientsStrings = [];
-        const numClients = this.auditState.get('numClients');
+        const numClients = this._auditState.get('numClients');
 
         for (let role in numClients) {
           const str = `${role}: ${padLeft(numClients[role], 2)}`;
           numClientsStrings.push(str);
         }
 
-        this.numClientsString = numClientsStrings.join(' - ');
+        this._numClientsString = numClientsStrings.join(' - ');
       }
 
       this.requestUpdate();
     }, true);
   }
 
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    this._auditState.detach();
+  }
+
   render() {
-    if (this.auditState === null) {
+    if (this._auditState === null) {
       return nothing;
     }
 
-    const avgLatency = this.auditState.get('averageNetworkLatency');
+    const avgLatency = this._auditState.get('averageNetworkLatency');
     const avgLatencyString = padLeft((avgLatency * 1e3).toFixed(2), 6);
 
     return html`
       <div>
-        ${unsafeHTML(this.numClientsString)} | avg latency: ${unsafeHTML(avgLatencyString)} ms
+        ${unsafeHTML(this._numClientsString)} | avg latency: ${unsafeHTML(avgLatencyString)} ms
       </div>
     `;
   }

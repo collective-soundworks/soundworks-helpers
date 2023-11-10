@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fork, execSync } from 'node:child_process';
 
-import rimraf from 'rimraf';
-import mkdirp from 'mkdirp';
+import { rimraf } from 'rimraf';
+import { mkdirp } from 'mkdirp';
 import puppeteer from 'puppeteer';
 
 let browser;
@@ -21,6 +21,12 @@ console.log(`
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
 `);
+
+if (!fs.existsSync(appPath)) {
+  console.log(`"${appPath}" does not exists`);
+  console.log(`> make sure to launch this script at the root of soundworks-helpers`);
+  process.exit(0);
+}
 
 if (!fs.existsSync(path.join(appPath, 'node_modules'))) {
   console.log('> Installing deps');

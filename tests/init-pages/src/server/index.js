@@ -20,16 +20,10 @@ console.log(`
 --------------------------------------------------------
 `);
 
-/**
- * Create the soundworks server
- */
 const server = new Server(config);
 // configure the server for usage within this application template
 server.useDefaultApplicationTemplate();
 
-/**
- * Register plugins and schemas
- */
 server.pluginManager.register('platform-init', platformInitPlugin);
 
 server.pluginManager.register('default-inited', (Plugin) => {
@@ -70,11 +64,6 @@ server.pluginManager.register('position-yrange', pluginPosition, {
 server.pluginManager.register('position-background', pluginPosition, {
   backgroundImage: 'images/seating-map.png',
 });
-
-/**
- * Launch application (init plugins, http server, etc.)
- */
 await server.start();
 
-// and do your own stuff!
 

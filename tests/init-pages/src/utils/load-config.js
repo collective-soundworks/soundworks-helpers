@@ -33,7 +33,7 @@ export function loadConfig(ENV = 'default', callerURL = null) {
   let app = null;
 
   // parse env config
-  const envConfigFilepath = path.join('config', 'env', `${ENV}.json`);
+  const envConfigFilepath = path.join('config', `env-${ENV}.json`);
 
   try {
     env = JSON5.parse(fs.readFileSync(envConfigFilepath, 'utf-8'));
@@ -43,7 +43,7 @@ export function loadConfig(ENV = 'default', callerURL = null) {
     console.info(`- Environment config file not found: "${envConfigFilepath}"`);
     console.info(`- Using default config:`);
     console.info(DEFAULT_ENV_CONFIG);
-    console.info('- hint: run `npx soundworks --create-config` to create a dedicated config file');
+    console.info('- run `npx soundworks --create-env` to create a custom environment file');
     console.info('--------------------------------------------------------');
 
     env = DEFAULT_ENV_CONFIG;

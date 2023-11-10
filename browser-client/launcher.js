@@ -43,6 +43,8 @@ const browserLauncher = {
   } = {}) {
     const $container = document.body;
     $container.classList.remove('loading');
+    // override container style so that emulated client are rendered horizontally
+    // $container.style.
 
     // special logic for emulated clients (1 click to rule them all)
     if (numClients > 1) {
@@ -62,6 +64,7 @@ const browserLauncher = {
           outline: 1px solid #aaaaaa;
           position: relative;
           overflow: auto;
+          display: flex;
         }
 
         .emulated-clients-init-all {
@@ -91,25 +94,24 @@ const browserLauncher = {
 
       document.querySelector('head').appendChild(style);
 
-      // we need to do this first to have access to the clients
-      // which are registered in the render method
+      // create the containers before bootstraping clients
+      // we also create the start button now and remove it later
       render(html`
         <div class="emulated-clients-init-all" style="display: none">
-          <p>
-            click to start
-          </p>
+          <p>click to start</p>
         </div>
         ${Array(numClients).fill(null).map(() => {
-          return html`
-            <div class="emulated-client-container"></div>
-          `;
+          return html`<div class="emulated-client-container"></div>`;
         })}
       `, $container);
 
-      // bootstrap clients
+      const $startButton = $container.querySelector('.emulated-clients-init-all');
       const $containers = $container.querySelectorAll('.emulated-client-container');
+
+      // bootstrap all clients
       Array.from($containers).forEach($container => bootstrap($container));
 
+      // clients are now registered, i.e.  `launcher.register(client);` has been called
       // check if @soundworks/plugin-platform-init plugins have been registered
       const platformInitPromises = Array.from(this._clients).map((client, index) => {
         return new Promise(resolve => {
@@ -132,7 +134,6 @@ const browserLauncher = {
 
       // if platform plugins found, show the big "rule them all" button
       if (platformInitPlugins.length > 0) {
-        const $startButton = $container.querySelector('.emulated-clients-init-all');
         $startButton.style.display = 'block';
 
         function launchPlatformInitPlugins(e) {
@@ -140,10 +141,11 @@ const browserLauncher = {
 
           $startButton.removeEventListener('click', launchPlatformInitPlugins);
           $startButton.remove();
-          // numClients
         }
 
         $startButton.addEventListener('click', launchPlatformInitPlugins);
+      } else {
+        $startButton.remove();
       }
     } else {
       bootstrap($container);
