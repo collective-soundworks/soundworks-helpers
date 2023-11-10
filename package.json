@@ -12,9 +12,8 @@
   "type": "module",
   "exports": {
     "./launcher.js": {
-      "module": "./browser-client/launcher.js",
       "node": "./node-client/launcher.js",
-      "types": "./types/launcher.js"
+      "default": "./browser-client/launcher.js"
     },
     "./polyfills.js": {
       "node": "./node-client/polyfills.js",
