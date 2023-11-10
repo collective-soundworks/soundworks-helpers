@@ -212,6 +212,10 @@ launcher.register(client);
 
 <!-- apistop -->
 
+## Credits
+
+[https://soundworks.dev/credits.html](https://soundworks.dev/credits.html)
+
 ## License
 
 [BSD-3-Clause](./LICENSE)
