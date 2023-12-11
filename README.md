@@ -174,8 +174,9 @@ uncaught error occurs in the program.
 *   `options` **[object][13]** Configuration object. (optional, default `{}`)
 
     *   `options.restartOnError` **[boolean][17]** Define if the client should
-        restart when on uncaught and socket errors. (optional, default `true`)
-    *   `options.restartOnSocketClose`   (optional, default `true`)
+        restart on uncaught errors. (optional, default `false`)
+    *   `options.restartOnSocketClose` **[boolean][17]** Define if the client should
+        restart on socket disconnection. (optional, default `true`)
 
 #### Examples
 

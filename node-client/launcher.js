@@ -79,8 +79,10 @@ const nodeLauncher = {
    *
    * @param {Function} client - The soundworks client.
    * @param {object} options - Configuration object.
-   * @param {boolean} [options.restartOnError=true] - Define if the client should
-   *  restart when on uncaught and socket errors.
+   * @param {boolean} [options.restartOnError=false] - Define if the client should
+   *  restart on uncaught errors.
+   * @param {boolean} [options.restartOnSocketClose=true] - Define if the client should
+   *  restart on socket disconnection.
    * @example
    * launcher.register(client);
    */
