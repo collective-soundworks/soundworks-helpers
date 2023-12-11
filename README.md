@@ -175,6 +175,7 @@ uncaught error occurs in the program.
 
     *   `options.restartOnError` **[boolean][17]** Define if the client should
         restart when on uncaught and socket errors. (optional, default `true`)
+    *   `options.restartOnSocketClose`   (optional, default `true`)
 
 #### Examples
 
