@@ -1,0 +1,5 @@
+{
+  "name": "test-node-launcher",
+  "eslint": true,
+  "language": "js"
+}

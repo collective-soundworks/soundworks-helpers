@@ -1,0 +1,9 @@
+{
+  name: 'test-node-launcher',
+  author: '',
+  clients: {
+    thing: {
+      target: 'node',
+    },
+  },
+}
