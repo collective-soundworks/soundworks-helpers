@@ -352,17 +352,20 @@ const browserLauncher = {
   },
 
   /**
-   * Language to be used in the initialization screens. By default, pick language
-   * from the browser and fallback to english if not supported.
-   *
-   * For now, available languages are 'fr' and 'en'.
-   *
-   * @type {string}
+   * Return the locale strings
+   * @type {object}
    */
   get language() {
     return this._language;
   },
 
+  /**
+   * Set the language to be used in the initialization screens. By default, picks
+   * language from the browser and fallback to english if not supported.
+   * For now, available languages are 'fr' and 'en'.
+   *
+   * @type {string}
+   */
   set language(lang) {
     if (!(lang in this._languageData)) {
       throw new Error(`[soundworks:helpers] Cannot set language to "${lang}", no data available`);

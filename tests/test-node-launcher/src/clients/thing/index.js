@@ -27,7 +27,7 @@ async function bootstrap() {
   // Test Case 2: Socket disconnect, e.g. server restart
   // - should restart client after small timeout
 
-  const testCase = 2;
+  const testCase = 1;
 
   switch (testCase) {
     case 1: {
@@ -38,7 +38,7 @@ async function bootstrap() {
 
         // test case 1 error throw - should stop client and wait for new file changes
         if (counter === 5) {
-          throw new Error(`[client ${client.role}(${client.id})] Error occured 2`);
+          throw new Error(`[client ${client.role}(${client.id})] Error occured`);
         }
       }, 200);
 

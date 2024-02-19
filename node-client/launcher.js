@@ -17,11 +17,14 @@ import chalk from 'chalk';
 
 const RESTART_TIMEOUT = 500; // ms
 
+const RESTART_EXIT_CODE = 10;
+const DO_NOT_RESTART_EXIT_CODE = 11;
+
 function forkRestartableProcess(modulePath) {
   const child = fork(modulePath, ['child'], {});
 
   child.on('exit', (code) => {
-    if (code === 10) {
+    if (code === RESTART_EXIT_CODE) {
       console.log(chalk.cyan(`[launcher] restarting process in ${RESTART_TIMEOUT}ms`));
       setTimeout(() => forkRestartableProcess(modulePath), RESTART_TIMEOUT);
     }
@@ -101,14 +104,15 @@ const nodeLauncher = {
       }
     });
 
-    async function exitHandler(err, exitCode) {
-      console.log(chalk.cyan(`[launcher][client ${client.role}(${client.id})] closing due to error...`));
-
-      if (err && err.message) {
-        console.error(chalk.red(`> ${err.type} ${err.message}`));
+    async function exitHandler(msg, err, exitCode) {
+      if (msg !== null) {
+        console.error(chalk.yellow(`> ${msg}`));
       } else {
-        console.error(chalk.red(`> ${err}`));
+        console.error(chalk.red(`> Uncaught Error:`));
+        console.error(err);
       }
+
+      console.log(chalk.cyan(`[launcher][client ${client.role}(${client.id})] exiting process...`));
 
       try {
         // make sure we can't receive another error while stopping the client
@@ -116,8 +120,6 @@ const nodeLauncher = {
         process.removeAllListeners('unhandledRejection');
 
         await client.stop();
-
-        console.log(chalk.cyan(`[launcher][client ${client.role}(${client.id})] exiting process...`));
         process.exit(exitCode);
       } catch(err) {
         // just crash the process
@@ -127,13 +129,13 @@ const nodeLauncher = {
       }
     }
 
-    const socketExitCode = restartOnSocketClose ? 10 : 11;
-    client.socket.addListener('close', () => exitHandler('socket closed', socketExitCode));
-    client.socket.addListener('error', () => exitHandler('socket errored', socketExitCode));
+    const socketExitCode = restartOnSocketClose ? RESTART_EXIT_CODE : DO_NOT_RESTART_EXIT_CODE;
+    client.socket.addListener('close', () => exitHandler('Socket closed', null, socketExitCode));
+    client.socket.addListener('error', () => exitHandler('Socket errored', null, socketExitCode));
 
-    const errorExitCode = restartOnError ? 10 : 11;
-    process.addListener('uncaughtException', err => exitHandler(err, errorExitCode));
-    process.addListener('unhandledRejection', err => exitHandler(err, errorExitCode));
+    const errorExitCode = restartOnError ? RESTART_EXIT_CODE : DO_NOT_RESTART_EXIT_CODE;
+    process.addListener('uncaughtException', err => exitHandler(null, err, errorExitCode));
+    process.addListener('unhandledRejection', err => exitHandler(null, err, errorExitCode));
   },
 };
 
