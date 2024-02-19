@@ -22,12 +22,13 @@ npm install --save @soundworks/helpers
     *   [execute][3]
     *   [register][4]
     *   [language][5]
-    *   [setLanguageData][6]
-    *   [getLanguageData][7]
-*   [nodeLauncher][8]
-    *   [Examples][9]
-    *   [execute][10]
-    *   [register][11]
+    *   [language][6]
+    *   [setLanguageData][7]
+    *   [getLanguageData][8]
+*   [nodeLauncher][9]
+    *   [Examples][10]
+    *   [execute][11]
+    *   [register][12]
 
 ## browserLauncher
 
@@ -47,12 +48,12 @@ e.g. `http://127.0.0.1:8000?emulate=10` to run 10 clients in parallel
 
 #### Parameters
 
-*   `bootstrap` **[Function][12]** Bootstrap function to execute.
-*   `options` **[object][13]** Configuration object. (optional, default `{}`)
+*   `bootstrap` **[Function][13]** Bootstrap function to execute.
+*   `options` **[object][14]** Configuration object. (optional, default `{}`)
 
-    *   `options.numClients` **[number][14]** Number of parallel clients. (optional, default `1`)
-    *   `options.width` **[string][15]** If numClient > 1, width of the container. (optional, default `'20%'`)
-    *   `options.height` **[string][15]** If numClient > 1, height of the container. (optional, default `'500px'`)
+    *   `options.numClients` **[number][15]** Number of parallel clients. (optional, default `1`)
+    *   `options.width` **[string][16]** If numClient > 1, width of the container. (optional, default `'20%'`)
+    *   `options.height` **[string][16]** If numClient > 1, height of the container. (optional, default `'500px'`)
 
 #### Examples
 
@@ -85,14 +86,14 @@ The launcher will do a bunch of stuff for you:
 
 #### Parameters
 
-*   `client` **[Function][12]** The soundworks client.
-*   `options` **[object][13]** Configuration object. (optional, default `{}`)
+*   `client` **[Function][13]** The soundworks client.
+*   `options` **[object][14]** Configuration object. (optional, default `{}`)
 
-    *   `options.initScreensContainer` **[HTMLElement][16]** The HTML container for
+    *   `options.initScreensContainer` **[HTMLElement][17]** The HTML container for
         the initialization screens. (optional, default `null`)
-    *   `options.reloadOnVisibilityChange` **[boolean][17]** Define if the client
+    *   `options.reloadOnVisibilityChange` **[boolean][18]** Define if the client
         should reload on visibility change. (optional, default `true`)
-    *   `options.reloadOnSocketError` **[boolean][17]** Define if the client
+    *   `options.reloadOnSocketError` **[boolean][18]** Define if the client
         should reload on socket error and disconnection. (optional, default `true`)
 
 #### Examples
@@ -103,12 +104,21 @@ launcher.register(client, { initScreensContainer: $container });
 
 ### language
 
-Language to be used in the initialization screens. By default, pick language
-from the browser and fallback to english if not supported.
+Return the locale strings
 
+Type: [object][14]
+
+### language
+
+Set the language to be used in the initialization screens. By default, picks
+language from the browser and fallback to english if not supported.
 For now, available languages are 'fr' and 'en'.
 
-Type: [string][15]
+Type: [string][16]
+
+#### Parameters
+
+*   `lang` &#x20;
 
 ### setLanguageData
 
@@ -117,8 +127,8 @@ language as well as define a new one.
 
 #### Parameters
 
-*   `lang` **[string][15]** Key correspondig to the language (e.g. 'fr', 'en', 'es')
-*   `data` **[object][13]** Key/value pairs defining the text strings to be used.
+*   `lang` **[string][16]** Key correspondig to the language (e.g. 'fr', 'en', 'es')
+*   `data` **[object][14]** Key/value pairs defining the text strings to be used.
 
 ### getLanguageData
 
@@ -126,7 +136,7 @@ Retrieve the data for a given language.
 
 #### Parameters
 
-*   `lang` **[string][15]** Key correspondig to the language (e.g. 'fr', 'en', 'es') (optional, default `null`)
+*   `lang` **[string][16]** Key correspondig to the language (e.g. 'fr', 'en', 'es') (optional, default `null`)
 
 ## nodeLauncher
 
@@ -146,11 +156,11 @@ e.g. `EMULATE=10 npm run watch-process thing` to run 10 clients side-by-side
 
 #### Parameters
 
-*   `bootstrap` **[Function][12]** Bootstrap function to execute.
-*   `options` **[object][13]** Configuration object. (optional, default `{}`)
+*   `bootstrap` **[Function][13]** Bootstrap function to execute.
+*   `options` **[object][14]** Configuration object. (optional, default `{}`)
 
-    *   `options.numClients` **[number][14]** Number of parallel clients. (optional, default `1`)
-    *   `options.moduleURL` **[string][15]** Module url of the calling filr. (optional, default `null`)
+    *   `options.numClients` **[number][15]** Number of parallel clients. (optional, default `1`)
+    *   `options.moduleURL` **[string][16]** Module url of the calling filr. (optional, default `null`)
 
 #### Examples
 
@@ -170,12 +180,12 @@ uncaught error occurs in the program.
 
 #### Parameters
 
-*   `client` **[Function][12]** The soundworks client.
-*   `options` **[object][13]** Configuration object. (optional, default `{}`)
+*   `client` **[Function][13]** The soundworks client.
+*   `options` **[object][14]** Configuration object. (optional, default `{}`)
 
-    *   `options.restartOnError` **[boolean][17]** Define if the client should
+    *   `options.restartOnError` **[boolean][18]** Define if the client should
         restart on uncaught errors. (optional, default `false`)
-    *   `options.restartOnSocketClose` **[boolean][17]** Define if the client should
+    *   `options.restartOnSocketClose` **[boolean][18]** Define if the client should
         restart on socket disconnection. (optional, default `true`)
 
 #### Examples
@@ -194,29 +204,31 @@ launcher.register(client);
 
 [5]: #language
 
-[6]: #setlanguagedata
+[6]: #language-1
 
-[7]: #getlanguagedata
+[7]: #setlanguagedata
 
-[8]: #nodelauncher
+[8]: #getlanguagedata
 
-[9]: #examples-3
+[9]: #nodelauncher
 
-[10]: #execute-1
+[10]: #examples-3
 
-[11]: #register-1
+[11]: #execute-1
 
-[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[12]: #register-1
 
-[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[16]: https://developer.mozilla.org/docs/Web/HTML/Element
+[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[17]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
 <!-- apistop -->
 
