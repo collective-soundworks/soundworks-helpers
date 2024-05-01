@@ -20,10 +20,15 @@ const RESTART_TIMEOUT = 500; // ms
 const RESTART_EXIT_CODE = 10;
 const DO_NOT_RESTART_EXIT_CODE = 11;
 
+const childProcesses = new Set();
+
 function forkRestartableProcess(modulePath) {
-  const child = fork(modulePath, ['child'], {});
+  const child = fork(modulePath, ['--child'], {});
+  childProcesses.add(child);
 
   child.on('exit', (code) => {
+    childProcesses.delete(child);
+
     if (code === RESTART_EXIT_CODE) {
       console.log(chalk.cyan(`[launcher] restarting process in ${RESTART_TIMEOUT}ms`));
       setTimeout(() => forkRestartableProcess(modulePath), RESTART_TIMEOUT);
@@ -58,19 +63,34 @@ const nodeLauncher = {
     moduleURL = null,
   } = {}) {
     if (!Number.isInteger(numClients)) {
-      throw new Error('[launcher] `numClients` options is mandatory and should be an integer');
+      throw new Error('[launcher] `numClients` option should be an integer');
     }
 
     if (moduleURL === null) {
       throw new Error('[launcher] `moduleURL` option is mandatory');
     }
 
-    if (process.argv[2] === 'child') {
+    if (process.argv[2] === '--child') {
+      // restartable childProcesses branch executed as "main" branch child process
       bootstrap();
     } else {
+      // "main" branch
       for (let i = 0; i < numClients; i++) {
         forkRestartableProcess(fileURLToPath(moduleURL));
       }
+
+      // --watch flag sends a SIGTERM event
+      // cf. https://github.com/nodejs/node/issues/47990#issuecomment-1546839090
+      process.on('SIGTERM', () => {
+        childProcesses.forEach(child => child.kill('SIGTERM'));
+        childProcesses.clear();
+      });
+
+      // ctrl+c sends a SIGINT event
+      process.on('SIGINT', () => {
+        childProcesses.forEach(child => child.kill('SIGTERM'));
+        childProcesses.clear();
+      });
     }
   },
 
