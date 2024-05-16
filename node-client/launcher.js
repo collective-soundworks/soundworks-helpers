@@ -16,7 +16,6 @@ import chalk from 'chalk';
 // + 11 - do not restart, e.g. uncaught error
 
 const RESTART_TIMEOUT = 500; // ms
-
 const RESTART_EXIT_CODE = 10;
 const DO_NOT_RESTART_EXIT_CODE = 11;
 
@@ -81,15 +80,23 @@ const nodeLauncher = {
 
       // --watch flag sends a SIGTERM event
       // cf. https://github.com/nodejs/node/issues/47990#issuecomment-1546839090
-      process.on('SIGTERM', () => {
-        childProcesses.forEach(child => child.kill('SIGTERM'));
+      process.once('SIGTERM', () => {
+        childProcesses.forEach(child => child.kill('SIGKILL'));
         childProcesses.clear();
+        // force the "main" process to exit even if some async stuff is running
+        // e.g. if not present an AudioContext created globaly, i.e. outside `bootstrap`,
+        // can block the exit of the main process
+        process.exit(0);
       });
 
       // ctrl+c sends a SIGINT event
-      process.on('SIGINT', () => {
-        childProcesses.forEach(child => child.kill('SIGTERM'));
+      process.once('SIGINT', () => {
+        childProcesses.forEach(child => child.kill('SIGKILL'));
         childProcesses.clear();
+        // force the "main" process to exit even if some async stuff is running
+        // e.g. if not present an AudioContext created globaly, i.e. outside `bootstrap`,
+        // can block the exit of the main process
+        process.exit(0);
       });
     }
   },
@@ -135,9 +142,11 @@ const nodeLauncher = {
       console.log(chalk.cyan(`[launcher][client ${client.role}(${client.id})] exiting process...`));
 
       try {
-        // make sure we can't receive another error while stopping the client
+        // make sure we don't try to stop the client twice
         process.removeAllListeners('uncaughtException');
         process.removeAllListeners('unhandledRejection');
+        client.socket.removeAllListeners('close');
+        client.socket.removeAllListeners('error');
 
         await client.stop();
         process.exit(exitCode);

@@ -41,17 +41,15 @@
   "dependencies": {
     "@webcomponents/webcomponentsjs": "^2.4.3",
     "chalk": "^5.3.0",
-    "core-js": "^3.33.2",
-    "lit": "^3.0.2",
-    "regenerator-runtime": "^0.14.0"
+    "core-js": "^3.37.1",
+    "lit": "^3.0.2"
   },
   "devDependencies": {
     "@ircam/eslint-config": "^1.1.0",
     "jsdoc-to-readme": "^2.0.2",
     "markdown-toc": "^1.2.0",
     "mkdirp": "^3.0.1",
-    "puppeteer": "^21.5.1",
-    "rimraf": "^5.0.5",
-    "typescript": "^5.2.2"
+    "puppeteer": "^22.8.2",
+    "rimraf": "^5.0.7"
   }
 }

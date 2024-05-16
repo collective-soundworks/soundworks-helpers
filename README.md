@@ -4,7 +4,9 @@ Set of common helpers for [`soundworks`](https://soundworks.dev) applications.
 
 ## Manual Installation
 
-Note that the `@soundworks/helpers` package is automatically installed when you create an application using the `@soundworks/create` wizard, so most of the time you should not care to install this package manually. See [https://soundworks.dev/guides/getting-started.html](https://soundworks.dev/guides/getting-started.html) for more informations on the `soundworks` wizard.
+Note that the `@soundworks/helpers` package is automatically installed when you create an application using the `@soundworks/create` wizard, so most of the time you should not care to install this package manually. 
+
+See [https://soundworks.dev/guides/getting-started.html](https://soundworks.dev/guides/getting-started.html) for more information on the `soundworks` wizard.
 
 ```
 npm install --save @soundworks/helpers
