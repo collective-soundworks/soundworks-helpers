@@ -61,11 +61,11 @@ const nodeLauncher = {
     numClients = 1,
     moduleURL = null,
   } = {}) {
-    if (!Number.isInteger(numClients)) {
-      throw new Error('[launcher] `numClients` option should be an integer');
+    if (!Number.isInteger(numClients) || numClients < 1) {
+      throw new Error('[launcher] `numClients` option should be a positive integer');
     }
 
-    if (moduleURL === null) {
+    if (typeof moduleURL !== 'string') {
       throw new Error('[launcher] `moduleURL` option is mandatory');
     }
 
