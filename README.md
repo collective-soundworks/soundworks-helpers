@@ -189,6 +189,10 @@ uncaught error occurs in the program.
         restart on uncaught errors. (optional, default `false`)
     *   `options.restartOnSocketClose` **[boolean][18]** Define if the client should
         restart on socket disconnection. (optional, default `true`)
+    *   `options.exitOnAll` **[boolean][18]** If true, exit the parent "launcher"
+        process on both error and socket close, may be usefull in production settings
+        if the application is e.g. managed by a daemon at the system level. (optional, default `false`)
+    *   `options.exitParentProcess`   (optional, default `false`)
 
 #### Examples
 
