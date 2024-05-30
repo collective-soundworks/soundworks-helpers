@@ -33,6 +33,8 @@ function forkRestartableProcess(modulePath) {
       setTimeout(() => forkRestartableProcess(modulePath), RESTART_TIMEOUT);
     }
   });
+
+  return child;
 }
 
 /**
@@ -61,6 +63,9 @@ const nodeLauncher = {
     numClients = 1,
     moduleURL = null,
   } = {}) {
+    // In this function `process` refers to the parent orchestrator process
+    // or to restartable childProcesses if process.argv[2] === '--child'
+
     if (!Number.isInteger(numClients) || numClients < 1) {
       throw new Error('[launcher] `numClients` option should be a positive integer');
     }
@@ -70,13 +75,30 @@ const nodeLauncher = {
     }
 
     if (process.argv[2] === '--child') {
-      // restartable childProcesses branch executed as "main" branch child process
+      // restartable child processes branch
       bootstrap();
     } else {
-      // "main" branch
+      // parent process branch
       for (let i = 0; i < numClients; i++) {
-        forkRestartableProcess(fileURLToPath(moduleURL));
+        const child = forkRestartableProcess(fileURLToPath(moduleURL));
+
+        // if `register#exitParentProcess` option is set to true, wait for a message
+        // from the child process to exit the main process
+        child.on('message', msg => {
+          if (msg === 'launcher:exit-parent-process') {
+            console.log(chalk.cyan('[launcher] exit parent process'));
+            childProcesses.forEach(child => child.kill('SIGKILL'));
+            childProcesses.clear();
+            // force the "main" process to exit even if some async stuff is running
+            process.exit(1);
+          }
+        });
+
       }
+
+      process.on('exit', () => {
+        console.log(chalk.cyan('[launcher] main process exit'));
+      });
 
       // --watch flag sends a SIGTERM event
       // cf. https://github.com/nodejs/node/issues/47990#issuecomment-1546839090
@@ -113,15 +135,21 @@ const nodeLauncher = {
    *  restart on uncaught errors.
    * @param {boolean} [options.restartOnSocketClose=true] - Define if the client should
    *  restart on socket disconnection.
+   * @param {boolean} [options.exitOnAll=false] - If true, exit the parent "launcher"
+   *  process on both error and socket close, may be usefull in production settings
+   *  if the application is e.g. managed by a daemon at the system level.
    * @example
    * launcher.register(client);
    */
   async register(client, {
     restartOnError = false,
     restartOnSocketClose = true,
+    exitParentProcess = false,
   } = {}) {
+    // In this function `process` refers to the restartable child processes
+    // as they are the only ones that execute the `bootstrap` given in `execute`
     const { useHttps, serverAddress, port } = client.config.env;
-    const url = `${useHttps ? 'https' : 'http'}://${serverAddress}:${port}`;
+    const url = `${useHttps ? 'https' : 'http'}://${serverAddress || '127.0.0.1'}:${port}`;
 
     console.log(chalk.cyan(`[launcher][client ${client.role}] connecting to ${url}`));
 
@@ -148,8 +176,12 @@ const nodeLauncher = {
         client.socket.removeAllListeners('close');
         client.socket.removeAllListeners('error');
 
-        await client.stop();
-        process.exit(exitCode);
+        if (exitParentProcess === true) {
+          process.send('launcher:exit-parent-process');
+        } else {
+          await client.stop();
+          process.exit(exitCode);
+        }
       } catch(err) {
         // just crash the process
         console.error(chalk.red('> error in exitHandler'));
