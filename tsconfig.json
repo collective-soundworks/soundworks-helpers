@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*.js"],
+  "include": ["browser-client/*.js", "node-client/*.js"],
 
   "compilerOptions": {
     // Tells TypeScript to read JS files, as
@@ -16,7 +16,7 @@
     "outDir": "types",
     // go to js file when using IDE functions like
     // "Go to Definition" in VSCode
-    "declarationMap": true
-  }
+    "declarationMap": false
+  },
 }
 

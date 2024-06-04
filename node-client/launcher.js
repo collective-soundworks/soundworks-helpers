@@ -37,6 +37,8 @@ function forkRestartableProcess(modulePath) {
   return child;
 }
 
+// note that the launcher top level doc is removed from generated types:
+// https://github.com/microsoft/TypeScript/issues/46010
 /**
  * Launcher for clients running in Node.js runtime.
  *

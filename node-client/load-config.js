@@ -70,24 +70,15 @@ function loadYAMLConfig(ENV) {
 }
 
 /**
- * Load JS config object from json5 config files located in `/config`.
+ * Load configuration from files located in `/config` directory
  *
- * @param {String} [ENV='default'] - name of the environment. Should correspond
- *  to a file located in the `/config/env/` directory. If the file is not found
- *  the DEFAULT_CONFIG object will be used
- * @param {String} [callerURL=null] - retrieves the `role` from caller directory
- *  name for node clients.
- *
- * @returns {Object} config
- * @returns {Object} config.app - JS object of the informations contained in
- *  `/config/application.json`.
- * @returns {Object} config.env - JS object of the informations contained in
- *  `/config/env/${ENV}.json` with ENV being the first argument.
- * @returns {Object} config.role - node client only: type/role of the client
- *  as defined when the client has been created (see `/config/application.json`
- *  and directory name).
+ * @param {String} [ENV='default'] - Name of the environment corresponding to the
+ *  `config/env-${name}.{yaml|json}` file.
+ * @param {String} [callerURL=null] - Module url of the calling file, used to
+ *  automatically retrieve the `role` of node clients.
+ * @return {ClientConfig|ServerConfig}
  */
-export default function loadConfig(ENV = 'default', callerURL = null) {
+export default function nodeLoadConfig(ENV = 'default', callerURL = null) {
   const projectConfig = JSON.parse(fs.readFileSync('.soundworks'));
   const configFormat = projectConfig.configFormat?.toLowerCase() || 'json';
   let config = null;
