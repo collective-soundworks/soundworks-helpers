@@ -15,6 +15,10 @@
       "node": "./node-client/launcher.js",
       "default": "./browser-client/launcher.js"
     },
+    "./load-config.js": {
+      "node": "./node-client/load-config.js",
+      "default": "./browser-client/load-config.js"
+    },
     "./polyfills.js": {
       "node": "./node-client/polyfills.js",
       "default": "./browser-client/polyfills.js"
@@ -42,7 +46,8 @@
     "@webcomponents/webcomponentsjs": "^2.4.3",
     "chalk": "^5.3.0",
     "core-js": "^3.37.1",
-    "lit": "^3.0.2"
+    "lit": "^3.0.2",
+    "yaml": "^2.4.3"
   },
   "devDependencies": {
     "@ircam/eslint-config": "^1.1.0",

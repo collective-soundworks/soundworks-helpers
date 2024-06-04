@@ -49,9 +49,10 @@ const nodeLauncher = {
    * by defining the `EMULATE` env process variable
    * e.g. `EMULATE=10 npm run watch-process thing` to run 10 clients side-by-side
    *
-   * @param {Function} bootstrap - Bootstrap function to execute.
+   * @param {function} bootstrap - Bootstrap function to execute.
    * @param {object} options - Configuration object.
-   * @param {string} options.moduleURL - Module url of the calling filr.
+   * @param {string} options.moduleURL - Module url of the calling file, used as
+   *  current worink directory of the subprocesses.
    * @param {number} [options.numClients=1] - Number of parallel clients.
    * @example
    * launcher.execute(bootstrap, {

@@ -1,11 +1,9 @@
 # junk files
 .DS_Store
 Thumbs.db
-
-vendors
 node_modules
 
 tests/screenshots
 
 .bak
-.build
+NOTES.md
