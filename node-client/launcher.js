@@ -143,7 +143,7 @@ const nodeLauncher = {
    *  restart on uncaught errors.
    * @param {boolean} [options.restartOnSocketClose=true] - Define if the client should
    *  restart on socket disconnection.
-   * @param {boolean} [options.exitOnAll=false] - If true, exit the parent "launcher"
+   * @param {boolean} [options.exitParentProcess=false] - If true, exit the parent "launcher"
    *  process on both error and socket close, may be usefull in production settings
    *  if the application is e.g. managed by a daemon at the system level.
    * @example
@@ -196,8 +196,10 @@ const nodeLauncher = {
         if (exitParentProcess === true) {
           process.send('launcher:exit-parent-process');
         } else {
-          debugger;
-          await client.stop();
+          // Note 2025/07
+          // Do not try to cleanly stop the client, if the socket is closed
+          // this might end up with the process stuck in e.g. plugin.exit() methods
+          // await client.stop();
           process.exit(exitCode);
         }
       } catch(err) {
