@@ -2,10 +2,6 @@ import { html, render } from 'lit/html.js';
 // i18n
 import en from './i18n/en.js';
 import fr from './i18n/fr.js';
-// views
-import './components/sw-launcher.js';
-import './components/sw-plugin-default.js';
-import './components/sw-plugin-error.js';
 
 /** @private */
 const clients = new Set(); // <client, options>
