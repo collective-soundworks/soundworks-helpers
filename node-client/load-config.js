@@ -94,19 +94,29 @@ export default function nodeLoadConfig(ENV = 'default', callerURL = null) {
     }
   }
 
-    // retrieve role
+  // retrieve role from caller URL
   if (callerURL !== null) {
-    // grab the role from the caller url dirname
-    const dirname = path.dirname(callerURL);
-    const parent = path.resolve(dirname, '..');
-    const role = path.relative(parent, dirname);
+    let role = null;
+
+    if (callerURL.endsWith('index.js')) {
+      // grab the role from the caller url dirname
+      const dirname = path.dirname(callerURL);
+      const parent = path.resolve(dirname, '..');
+      role = path.relative(parent, dirname);
+    } else {
+      role = path.basename(callerURL, path.extname(callerURL));
+    }
+
+    if (role === null) {
+      throw new Error(`[build] Could not retrieve role from callerURL: ${callerURL}`);
+    }
 
     if (role !== 'server') {
       config.role = role;
     }
   }
 
-  // override from given env variables
+  // override env configuration with given command line ENV variables
   if (process.env.PORT) {
     config.env.port = parseInt(process.env.PORT);
   }
