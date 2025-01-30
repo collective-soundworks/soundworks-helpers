@@ -8,3 +8,4 @@
  * @return {ClientConfig|ServerConfig}
  */
 export default function nodeLoadConfig(ENV?: string, callerURL?: string): ClientConfig | ServerConfig;
+//# sourceMappingURL=load-config.d.ts.map

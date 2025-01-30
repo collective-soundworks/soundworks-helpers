@@ -18,7 +18,6 @@ function generateHtmlIndex(clientConfig) {
     </script>
     <script defer src="${clientConfig.env.baseUrl ? `/${clientConfig.env.baseUrl}` : ''}/build/${clientConfig.role}.js"></script>
 
-    <link rel="stylesheet" href="${clientConfig.env.baseUrl ? `/${clientConfig.env.baseUrl}` : ''}/build/css/normalize.css">
     <link rel="stylesheet" href="${clientConfig.env.baseUrl ? `/${clientConfig.env.baseUrl}` : ''}/build/css/app.css">
   </head>
 

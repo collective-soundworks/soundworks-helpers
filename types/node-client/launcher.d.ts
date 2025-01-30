@@ -8,7 +8,7 @@ declare namespace nodeLauncher {
      * @param {function} bootstrap - Bootstrap function to execute.
      * @param {object} options - Configuration object.
      * @param {string} options.moduleURL - Module url of the calling file, used as
-     *  current worink directory of the subprocesses.
+     *  current working directory of the subprocesses.
      * @param {number} [options.numClients=1] - Number of parallel clients.
      * @example
      * launcher.execute(bootstrap, {
@@ -26,21 +26,22 @@ declare namespace nodeLauncher {
      * Automatically restarts the process when the socket closes or when an
      * uncaught error occurs in the program.
      *
-     * @param {Function} client - The soundworks client.
+     * @param {Client} client - The soundworks client.
      * @param {object} options - Configuration object.
      * @param {boolean} [options.restartOnError=false] - Define if the client should
      *  restart on uncaught errors.
      * @param {boolean} [options.restartOnSocketClose=true] - Define if the client should
      *  restart on socket disconnection.
-     * @param {boolean} [options.exitOnAll=false] - If true, exit the parent "launcher"
-     *  process on both error and socket close, may be usefull in production settings
+     * @param {boolean} [options.exitParentProcess=false] - If true, exit the parent "launcher"
+     *  process on both error and socket close, may be useful in production settings
      *  if the application is e.g. managed by a daemon at the system level.
      * @example
      * launcher.register(client);
      */
-    function register(client: Function, { restartOnError, restartOnSocketClose, exitParentProcess, }?: {
+    function register(client: Client, { restartOnError, restartOnSocketClose, exitParentProcess, }?: {
         restartOnError?: boolean;
         restartOnSocketClose?: boolean;
-        exitOnAll?: boolean;
+        exitParentProcess?: boolean;
     }): Promise<void>;
 }
+//# sourceMappingURL=launcher.d.ts.map

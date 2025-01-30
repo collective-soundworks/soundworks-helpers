@@ -2,7 +2,7 @@ export default browserLauncher;
 declare namespace browserLauncher {
     let language: string;
     /**
-     * Allow to launch multiple clients at once in the same brwoser window by
+     * Allow to launch multiple clients at once in the same browser window by
      * adding `?emulate=numberOfClient` at the end of the url
      * e.g. `http://127.0.0.1:8000?emulate=10` to run 10 clients in parallel
      *
@@ -28,9 +28,9 @@ declare namespace browserLauncher {
      * - Display default initialization screens. If you want to change the provided
      * initialization screens, you can import all the helpers directly in your
      * application by doing `npx soundworks --eject-helpers`. You can also
-     * customise some global syles variables (background-color, text color etc.)
+     * customize some global styles variables (background-color, text color etc.)
      * in `src/clients/components/css/app.scss`.
-     * You can also change the default language of the intialization screen by
+     * You can also change the default language of the initialization screen by
      * setting, the `launcher.language` property, e.g.:
      * `launcher.language = 'fr'`
      * - By default the launcher automatically reloads the client when the socket
@@ -40,7 +40,7 @@ declare namespace browserLauncher {
      * in a background tab will have all its timers (setTimeout, etc.) put in very
      * low priority, messing any scheduled events.
      *
-     * @param {Function} client - The soundworks client.
+     * @param {Client} client - The soundworks client.
      * @param {object} options - Configuration object.
      * @param {HTMLElement} options.initScreensContainer - The HTML container for
      *  the initialization screens.
@@ -51,7 +51,7 @@ declare namespace browserLauncher {
      * @example
      * launcher.register(client, { initScreensContainer: $container });
      */
-    function register(client: Function, { initScreensContainer, reloadOnVisibilityChange, reloadOnSocketError, }?: {
+    function register(client: Client, { initScreensContainer, reloadOnVisibilityChange, reloadOnSocketError, }?: {
         initScreensContainer: HTMLElement;
         reloadOnVisibilityChange?: boolean;
         reloadOnSocketError?: boolean;
@@ -60,14 +60,15 @@ declare namespace browserLauncher {
      * Set the text to be used for a given language. Allows to override an existing
      * language as well as define a new one.
      *
-     * @param {string} lang - Key correspondig to the language (e.g. 'fr', 'en', 'es')
+     * @param {string} lang - Key corresponding to the language (e.g. 'fr', 'en', 'es')
      * @param {object} data - Key/value pairs defining the text strings to be used.
      */
     function setLanguageData(lang: string, data: any): void;
     /**
      * Retrieve the data for a given language.
      *
-     * @param {string} lang - Key correspondig to the language (e.g. 'fr', 'en', 'es')
+     * @param {string} lang - Key corresponding to the language (e.g. 'fr', 'en', 'es')
      */
     function getLanguageData(lang?: string): any;
 }
+//# sourceMappingURL=launcher.d.ts.map

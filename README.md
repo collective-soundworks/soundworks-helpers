@@ -55,7 +55,7 @@ Type: [string][15]
 
 ### execute
 
-Allow to launch multiple clients at once in the same brwoser window by
+Allow to launch multiple clients at once in the same browser window by
 adding `?emulate=numberOfClient` at the end of the url
 e.g. `http://127.0.0.1:8000?emulate=10` to run 10 clients in parallel
 
@@ -85,9 +85,9 @@ The launcher will do a bunch of stuff for you:
 *   Display default initialization screens. If you want to change the provided
     initialization screens, you can import all the helpers directly in your
     application by doing `npx soundworks --eject-helpers`. You can also
-    customise some global syles variables (background-color, text color etc.)
+    customize some global styles variables (background-color, text color etc.)
     in `src/clients/components/css/app.scss`.
-    You can also change the default language of the intialization screen by
+    You can also change the default language of the initialization screen by
     setting, the `launcher.language` property, e.g.:
     `launcher.language = 'fr'`
 *   By default the launcher automatically reloads the client when the socket
@@ -99,7 +99,7 @@ The launcher will do a bunch of stuff for you:
 
 #### Parameters
 
-*   `client` **[Function][16]** The soundworks client.
+*   `client` **Client** The soundworks client.
 *   `options` **[object][17]** Configuration object. (optional, default `{}`)
 
     *   `options.initScreensContainer` **[HTMLElement][19]** The HTML container for
@@ -122,7 +122,7 @@ language as well as define a new one.
 
 #### Parameters
 
-*   `lang` **[string][15]** Key correspondig to the language (e.g. 'fr', 'en', 'es')
+*   `lang` **[string][15]** Key corresponding to the language (e.g. 'fr', 'en', 'es')
 *   `data` **[object][17]** Key/value pairs defining the text strings to be used.
 
 ### getLanguageData
@@ -131,7 +131,7 @@ Retrieve the data for a given language.
 
 #### Parameters
 
-*   `lang` **[string][15]** Key correspondig to the language (e.g. 'fr', 'en', 'es') (optional, default `null`)
+*   `lang` **[string][15]** Key corresponding to the language (e.g. 'fr', 'en', 'es') (optional, default `null`)
 
 ## browserLoadConfig
 
@@ -162,7 +162,7 @@ e.g. `EMULATE=10 npm run watch-process thing` to run 10 clients side-by-side
 
     *   `options.numClients` **[number][18]** Number of parallel clients. (optional, default `1`)
     *   `options.moduleURL` **[string][15]** Module url of the calling file, used as
-        current worink directory of the subprocesses. (optional, default `null`)
+        current working directory of the subprocesses. (optional, default `null`)
 
 #### Examples
 
@@ -182,7 +182,7 @@ uncaught error occurs in the program.
 
 #### Parameters
 
-*   `client` **[Function][16]** The soundworks client.
+*   `client` **Client** The soundworks client.
 *   `options` **[object][17]** Configuration object. (optional, default `{}`)
 
     *   `options.restartOnError` **[boolean][20]** Define if the client should
@@ -190,7 +190,7 @@ uncaught error occurs in the program.
     *   `options.restartOnSocketClose` **[boolean][20]** Define if the client should
         restart on socket disconnection. (optional, default `true`)
     *   `options.exitParentProcess` **[boolean][20]** If true, exit the parent "launcher"
-        process on both error and socket close, may be usefull in production settings
+        process on both error and socket close, may be useful in production settings
         if the application is e.g. managed by a daemon at the system level. (optional, default `false`)
 
 #### Examples

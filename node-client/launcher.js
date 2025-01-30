@@ -59,7 +59,7 @@ const nodeLauncher = {
    * @param {function} bootstrap - Bootstrap function to execute.
    * @param {object} options - Configuration object.
    * @param {string} options.moduleURL - Module url of the calling file, used as
-   *  current worink directory of the subprocesses.
+   *  current working directory of the subprocesses.
    * @param {number} [options.numClients=1] - Number of parallel clients.
    * @example
    * launcher.execute(bootstrap, {
@@ -114,7 +114,7 @@ const nodeLauncher = {
         childProcesses.forEach(child => child.kill('SIGKILL'));
         childProcesses.clear();
         // force the "main" process to exit even if some async stuff is running
-        // e.g. if not present an AudioContext created globaly, i.e. outside `bootstrap`,
+        // e.g. if not present an AudioContext created globally, i.e. outside `bootstrap`,
         // can block the exit of the main process
         process.exit(0);
       });
@@ -124,7 +124,7 @@ const nodeLauncher = {
         childProcesses.forEach(child => child.kill('SIGKILL'));
         childProcesses.clear();
         // force the "main" process to exit even if some async stuff is running
-        // e.g. if not present an AudioContext created globaly, i.e. outside `bootstrap`,
+        // e.g. if not present an AudioContext created globally, i.e. outside `bootstrap`,
         // can block the exit of the main process
         process.exit(0);
       });
@@ -137,14 +137,14 @@ const nodeLauncher = {
    * Automatically restarts the process when the socket closes or when an
    * uncaught error occurs in the program.
    *
-   * @param {Function} client - The soundworks client.
+   * @param {Client} client - The soundworks client.
    * @param {object} options - Configuration object.
    * @param {boolean} [options.restartOnError=false] - Define if the client should
    *  restart on uncaught errors.
    * @param {boolean} [options.restartOnSocketClose=true] - Define if the client should
    *  restart on socket disconnection.
    * @param {boolean} [options.exitParentProcess=false] - If true, exit the parent "launcher"
-   *  process on both error and socket close, may be usefull in production settings
+   *  process on both error and socket close, may be useful in production settings
    *  if the application is e.g. managed by a daemon at the system level.
    * @example
    * launcher.register(client);

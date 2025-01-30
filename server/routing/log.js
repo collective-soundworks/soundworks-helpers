@@ -1,15 +1,15 @@
 import chalk from 'chalk';
 import columnify from 'columnify';
 
-export function logRoutes(serverConfig) {
+export function logRoutes(server) {
   const table = [];
 
-  for (let [clientRole, clientConfig] of Object.entries(serverConfig.app.clients)) {
+  for (let [clientRole, clientConfig] of Object.entries(server.config.app.clients)) {
     if (clientConfig.runtime === 'node') {
       const line = {
         role: `> ${clientRole}`,
         runtime: chalk.red(clientConfig.runtime),
-        path: `serverAddress: ${chalk.green(serverConfig.env.serverAddress || '127.0.0.1')}`,
+        path: `serverAddress: ${chalk.green(server.config.env.serverAddress || '127.0.0.1')}`,
         default: undefined,
         // auth: undefined,
       };
@@ -21,7 +21,7 @@ export function logRoutes(serverConfig) {
         runtime: chalk.red(clientConfig.runtime),
         path: clientConfig.default ? `/` : `/${clientRole}`,
         default: (clientConfig.default ? 'x' : undefined),
-        auth: serverConfig.app.auth?.clients?.indexOf(clientRole) >= 0 ? 'x' : undefined,
+        auth: server.isProtectedClientRole(clientRole) ? 'x' : undefined,
       };
 
       table.push(line);

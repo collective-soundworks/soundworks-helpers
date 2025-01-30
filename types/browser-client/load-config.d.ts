@@ -3,3 +3,4 @@
  * @returns {ClientConfig}
  */
 export default function browserLoadConfig(): ClientConfig;
+//# sourceMappingURL=load-config.d.ts.map

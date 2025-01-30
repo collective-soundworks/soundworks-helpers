@@ -2,6 +2,16 @@ import { html, render } from 'lit/html.js';
 // i18n
 import en from './i18n/en.js';
 import fr from './i18n/fr.js';
+// -----------------------------------------------------------------------------
+// Backward compatibility for old applications might rely on this direct import:
+// `import launcher from '@soundworks/helpers/launcher.js';`
+import './components/sw-launcher.js';
+import './components/sw-plugin-default.js';
+import './components/sw-plugin-error.js';
+// these were previously imported by their respective plugins
+import './components/sw-plugin-platform-init.js';
+import './components/sw-plugin-position.js';
+// -----------------------------------------------------------------------------
 
 /** @private */
 const clients = new Set(); // <client, options>
@@ -9,12 +19,15 @@ const clients = new Set(); // <client, options>
 const languageDataStore = { en, fr };
 /** @private */
 let language = null; // default to english
+/** @private */
+const ClientPluginPlatformInitClassName = 'ClientPluginPlatformInit';
+const ClientPluginPositionClassName = 'ClientPluginPosition';
 
 /** @private */
 function renderLaunchScreens(client, $container) {
   let lang;
 
-  // if language has not been set manually, pick language from the brwoser
+  // if language has not been set manually, pick language from the browser
   // and fallback to english if not supported
   if (language === null) {
     lang = navigator.language.split('-')[0];
@@ -47,7 +60,7 @@ function renderLaunchScreens(client, $container) {
     let platformInit = null;
 
     for (let instance of Object.values(plugins)) {
-      if (instance.type === 'PluginPlatformInitClient') {
+      if (instance.type === ClientPluginPlatformInitClassName) {
         platformInit = instance;
       }
     }
@@ -71,7 +84,7 @@ function renderLaunchScreens(client, $container) {
     let position = null;
 
     for (let instance of Object.values(plugins)) {
-      if (instance.type === 'PluginPositionClient') {
+      if (instance.type === ClientPluginPositionClassName) {
         position = instance;
       }
     }
@@ -137,14 +150,14 @@ function initQoS(client, reloadOnVisibilityChange, reloadOnSocketError) {
   if (reloadOnVisibilityChange) {
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
-        // differ by a few milliseconds, as the event is trigerred before the change
+        // differ by a few milliseconds, as the event is triggered before the change
         // see. https://github.com/collective-soundworks/soundworks/issues/42
         setTimeout(() => window.location.reload(true), 50);
       }
     }, false);
   }
 
-  // the "real" sockets are created at the begining of the `client.init` step
+  // the "real" sockets are created at the beginning of the `client.init` step
   // but the event listener system is already ready to use
   //
   // @note: most of the time this should be set to `true` but it may be handy
@@ -182,14 +195,14 @@ const browserLauncher = {
 
   set language(lang) {
     if (!(lang in languageDataStore)) {
-      throw new Error(`[soundworks:helpers] Cannot set language to "${lang}", no data available`);
+      throw new Error(`Cannot execute 'set' on launcher: no data available for language "${lang}"`);
     }
 
     language = lang;
   },
 
   /**
-   * Allow to launch multiple clients at once in the same brwoser window by
+   * Allow to launch multiple clients at once in the same browser window by
    * adding `?emulate=numberOfClient` at the end of the url
    * e.g. `http://127.0.0.1:8000?emulate=10` to run 10 clients in parallel
    *
@@ -261,7 +274,7 @@ const browserLauncher = {
 
       document.querySelector('head').appendChild(style);
 
-      // create the containers before bootstraping clients
+      // create the containers before bootstrapping clients
       // we also create the start button now and remove it later
       render(html`
         <div class="emulated-clients-init-all" style="display: none">
@@ -286,7 +299,7 @@ const browserLauncher = {
             unsubscribe();
 
             for (let [_id, plugin] of Object.entries(plugins)) {
-              if (plugin.type === 'PluginPlatformInitClient') {
+              if (plugin.type === ClientPluginPlatformInitClassName) {
                 resolve(plugin);
               }
             }
@@ -326,9 +339,9 @@ const browserLauncher = {
    * - Display default initialization screens. If you want to change the provided
    * initialization screens, you can import all the helpers directly in your
    * application by doing `npx soundworks --eject-helpers`. You can also
-   * customise some global syles variables (background-color, text color etc.)
+   * customize some global styles variables (background-color, text color etc.)
    * in `src/clients/components/css/app.scss`.
-   * You can also change the default language of the intialization screen by
+   * You can also change the default language of the initialization screen by
    * setting, the `launcher.language` property, e.g.:
    * `launcher.language = 'fr'`
    * - By default the launcher automatically reloads the client when the socket
@@ -338,7 +351,7 @@ const browserLauncher = {
    * in a background tab will have all its timers (setTimeout, etc.) put in very
    * low priority, messing any scheduled events.
    *
-   * @param {Function} client - The soundworks client.
+   * @param {Client} client - The soundworks client.
    * @param {object} options - Configuration object.
    * @param {HTMLElement} options.initScreensContainer - The HTML container for
    *  the initialization screens.
@@ -372,7 +385,7 @@ const browserLauncher = {
    * Set the text to be used for a given language. Allows to override an existing
    * language as well as define a new one.
    *
-   * @param {string} lang - Key correspondig to the language (e.g. 'fr', 'en', 'es')
+   * @param {string} lang - Key corresponding to the language (e.g. 'fr', 'en', 'es')
    * @param {object} data - Key/value pairs defining the text strings to be used.
    */
   setLanguageData(lang, data) {
@@ -382,7 +395,7 @@ const browserLauncher = {
   /**
    * Retrieve the data for a given language.
    *
-   * @param {string} lang - Key correspondig to the language (e.g. 'fr', 'en', 'es')
+   * @param {string} lang - Key corresponding to the language (e.g. 'fr', 'en', 'es')
    */
   getLanguageData(lang = null) {
     if (lang !== null) {

@@ -5,7 +5,7 @@ import express from 'express';
 
 import { clientIndex } from './routing/client-index.js';
 import { httpAuthentication } from './routing/http-authentication.js';
-import { logRoutes } from 'log.js';
+import { logRoutes } from './routing/log.js';
 
 /**
  * According to the clients definitions provided in `config.app.clients`, the
@@ -27,13 +27,12 @@ import { logRoutes } from 'log.js';
  * @param {Server} server - The soundworks server instance
  */
 export default async function configureHttpRouter(server) {
-  const serverConfig = server.config;
   // use express() instead of express.Router() to benefit from default handling of 404, etc.
   const router = express();
   router.use(compression());
 
   // create route for each browser client
-  for (let [clientRole, clientDescription] of Object.entries(serverConfig.app.clients)) {
+  for (let [clientRole, clientDescription] of Object.entries(server.config.app.clients)) {
     if (clientDescription.runtime === 'node') {
       continue;
     }
@@ -45,7 +44,7 @@ export default async function configureHttpRouter(server) {
       requestCallbacks.push(authenticationMiddleware);
     };
 
-    const indexRoute = clientIndex(clientRole, serverConfig);
+    const indexRoute = clientIndex(clientRole, server.config);
     requestCallbacks.push(indexRoute);
 
     if (clientDescription.default === true) {
@@ -62,6 +61,6 @@ export default async function configureHttpRouter(server) {
   server.router = router;
 
   if (server.config.env.verbose) {
-    logRoutes(serverConfig);
+    logRoutes(server);
   }
 }
