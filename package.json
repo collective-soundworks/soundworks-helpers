@@ -82,6 +82,6 @@
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
-    "soundworks/core": "^5.0.0"
+    "@soundworks/core": "^5.0.0"
   }
 }
