@@ -48,7 +48,7 @@ function isScriptingError(err) {
  * Launcher for clients running in Node.js runtime.
  *
  * @example
- * import launcher from '@soundworks/helpers/launcher.js'
+ * import launcher from '@soundworks/helpers/node.js'
  */
 const nodeLauncher = {
   /**

@@ -25,6 +25,12 @@ import { logRoutes } from './routing/log.js';
  * - `http://127.0.0.1:8000/` for the `player` role, which is defined as the default client.
  * - `http://127.0.0.1:8000/controller` for the `controller` role.
  * @param {Server} server - The soundworks server instance
+ * @example
+ * import { Server } from '@soundworks/core/server.js';
+ * import { configureHttpRouter, loadConfig } from '@soundworks/helpers/server.js';
+ *
+ * const server = new Server(loadConfig());
+ * configureHttpRouter(server);
  */
 export default async function configureHttpRouter(server) {
   // use express() instead of express.Router() to benefit from default handling of 404, etc.

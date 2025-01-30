@@ -178,7 +178,7 @@ function initQoS(client, reloadOnVisibilityChange, reloadOnSocketError) {
  * Launcher for clients running in browser runtime.
  *
  * @example
- * import launcher from '@soundworks/helpers/launcher.js'
+ * import launcher from '@soundworks/helpers/browser.js'
  */
 const browserLauncher = {
   /**

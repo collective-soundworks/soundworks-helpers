@@ -52,7 +52,7 @@
     "soundworks"
   ],
   "scripts": {
-    "api": "jsdoc-to-readme --src browser-client/launcher.js browser-client/load-config.js node-client/launcher.js node-client/load-config.js",
+    "api": "npm run types && jsdoc-to-readme --src browser-client/launcher.js browser-client/load-config.js node-client/launcher.js node-client/load-config.js server/configure-http-router.js",
     "lint": "npx eslint src && npx eslint tests",
     "preversion": "npm run api && git commit --allow-empty -am 'doc: build doc'",
     "test": "node tests/init-pages.js",
