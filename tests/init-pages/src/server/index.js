@@ -1,10 +1,9 @@
 import '@soundworks/helpers/polyfills.js';
-import { Server } from '@soundworks/core/server.js';
-import platformInitPlugin from '@soundworks/plugin-platform-init/server.js';
-import pluginPosition from '@soundworks/plugin-position/server.js';
+import { Server, ServerPlugin } from '@soundworks/core/server.js';
+import ServerPluginPlatformInit from '@soundworks/plugin-platform-init/server.js';
+import ServerPluginPosition from '@soundworks/plugin-position/server.js';
 
-import { loadConfig } from '../utils/load-config.js';
-import '../utils/catch-unhandled-errors.js';
+import { loadConfig, configureHttpRouter } from '@soundworks/helpers/server.js';
 
 // - General documentation: https://soundworks.dev/
 // - API documentation:     https://soundworks.dev/api
@@ -21,47 +20,34 @@ console.log(`
 `);
 
 const server = new Server(config);
-// configure the server for usage within this application template
-server.useDefaultApplicationTemplate();
+configureHttpRouter(server);
 
-server.pluginManager.register('platform-init', platformInitPlugin);
+server.pluginManager.register('platform-init', ServerPluginPlatformInit);
 
-server.pluginManager.register('default-inited', (Plugin) => {
-  return class DefaultPlugin extends Plugin {};
-});
+server.pluginManager.register('default-inited', class DefaultPlugin extends ServerPlugin {});
 
-server.pluginManager.register('default-errored', (Plugin) => {
-  return class DefaultPlugin extends Plugin {};
-});
+server.pluginManager.register('default-errored', class DefaultPlugin extends ServerPlugin {});
 
-server.pluginManager.register('default-sync', (Plugin) => {
-  return class PluginSync extends Plugin {};
-});
-server.pluginManager.register('default-audio-buffer-loader', (Plugin) => {
-  return class PluginAudioBufferLoader extends Plugin {};
-});
-server.pluginManager.register('default-checkin-errored', (Plugin) => {
-  return class PluginCheckin extends Plugin {};
-});
+server.pluginManager.register('default-sync', class PluginSync extends ServerPlugin {});
+server.pluginManager.register('default-audio-buffer-loader', class PluginAudioBufferLoader extends ServerPlugin {});
+server.pluginManager.register('default-checkin-errored', class PluginCheckin extends ServerPlugin {});
 
 // small test to just make sure the screen stays on the error page
-server.pluginManager.register('failing-plugin', (Plugin) => {
-  return class FailingPlugin extends Plugin {};
-});
+server.pluginManager.register('failing-plugin', class FailingPlugin extends ServerPlugin {});
 
-server.pluginManager.register('position-default', pluginPosition);
+server.pluginManager.register('position-default', ServerPluginPosition);
 
-server.pluginManager.register('position-xrange', pluginPosition, {
+server.pluginManager.register('position-xrange', ServerPluginPosition, {
   xRange: [0.25, 0.75],
   yRange: [0, 1],
 });
 
-server.pluginManager.register('position-yrange', pluginPosition, {
+server.pluginManager.register('position-yrange', ServerPluginPosition, {
   xRange: [0, 1],
   yRange: [0.25, 0.75],
 });
 
-server.pluginManager.register('position-background', pluginPosition, {
+server.pluginManager.register('position-background', ServerPluginPosition, {
   backgroundImage: 'images/seating-map.png',
 });
 await server.start();

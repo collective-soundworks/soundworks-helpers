@@ -1,0 +1,6 @@
+name: init-pages
+author: ""
+clients:
+  player:
+    runtime: browser
+    default: true
