@@ -63,7 +63,7 @@ declare namespace browserLauncher {
      * @param {string} lang - Key corresponding to the language (e.g. 'fr', 'en', 'es')
      * @param {object} data - Key/value pairs defining the text strings to be used.
      */
-    function setLanguageData(lang: string, data: any): void;
+    function setLanguageData(lang: string, data: object): void;
     /**
      * Retrieve the data for a given language.
      *
