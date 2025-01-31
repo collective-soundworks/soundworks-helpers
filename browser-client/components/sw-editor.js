@@ -10,7 +10,7 @@ function formatErrorMessage(err) {
 
   const text = err.location.methodName
     ? `"${err.text}" (in \`${err.location.methodName}\`)`
-    : err.text
+    : err.text;
 
   return `${text}
 \tat ${err.location.file}:${err.location.line}:${err.location.column}
@@ -158,7 +158,7 @@ class SwEditor extends LitElement {
         ></sc-editor>
         ${errors.length ? errors : nothing}
       </div>
-    `
+    `;
   }
 
   async _executeFileTreeCommand(e) {

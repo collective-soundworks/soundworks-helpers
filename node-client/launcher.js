@@ -202,7 +202,7 @@ const nodeLauncher = {
           // await client.stop();
           process.exit(exitCode);
         }
-      } catch(err) {
+      } catch (err) {
         // just crash the process
         console.error(chalk.red('> error in exitHandler'));
         console.error(err);

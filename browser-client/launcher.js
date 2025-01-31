@@ -115,6 +115,7 @@ function renderLaunchScreens(client, $container) {
     }
 
     if (allStarted) {
+      console.log('remove launcher');
       // all started, remove &launcher view
       $launcher.parentNode.removeChild($launcher);
       return;
@@ -293,7 +294,7 @@ const browserLauncher = {
 
       // clients are now registered, i.e.  `launcher.register(client);` has been called
       // check if @soundworks/plugin-platform-init plugins have been registered
-      const platformInitPromises = Array.from(clients).map((client, index) => {
+      const platformInitPromises = Array.from(clients).map(client => {
         return new Promise(resolve => {
           const unsubscribe = client.pluginManager.onStateChange(plugins => {
             unsubscribe();

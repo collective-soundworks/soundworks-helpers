@@ -53,8 +53,8 @@
   ],
   "scripts": {
     "api": "npm run types && jsdoc-to-readme --src browser-client/launcher.js browser-client/load-config.js node-client/launcher.js node-client/load-config.js server/configure-http-router.js",
-    "lint": "npx eslint src && npx eslint tests",
-    "preversion": "npm run api && git commit --allow-empty -am 'doc: build doc'",
+    "lint": "npx eslint browser-client && npx eslint node-client && npx eslint server",
+    "preversion": "npm run lint && npm run api && git commit --allow-empty -am 'doc: build doc'",
     "test": "node tests/init-pages.js",
     "toc": "markdown-toc -i README.md  --maxdepth 2",
     "types": "rm -Rf types && tsc"
@@ -73,7 +73,8 @@
     "yaml": "^2.4.3"
   },
   "devDependencies": {
-    "@ircam/eslint-config": "^1.1.0",
+    "@ircam/eslint-config": "^2.0.1",
+    "eslint": "^9.19.0",
     "jsdoc-to-readme": "^2.0.2",
     "markdown-toc": "^1.2.0",
     "mkdirp": "^3.0.1",

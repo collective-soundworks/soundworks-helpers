@@ -20,7 +20,7 @@ function loadJSONConfig(ENV) {
 
   try {
     env = JSON5.parse(fs.readFileSync(envConfigFilepath, 'utf-8'));
-  } catch(err) {
+  } catch {
     console.info('');
     console.info('--------------------------------------------------------');
     console.info(`- Environment config file not found: "${envConfigFilepath}"`);
@@ -36,7 +36,7 @@ function loadJSONConfig(ENV) {
 
   try {
     app = JSON5.parse(fs.readFileSync(appConfigFilepath, 'utf-8'));
-  } catch(err) {
+  } catch {
     console.error(`Invalid app config file: ${appConfigFilepath}`);
     process.exit(1);
   }
@@ -52,7 +52,7 @@ function loadYAMLConfig(ENV) {
 
   try {
     env = YAML.parse(fs.readFileSync(envConfigFilepath, 'utf-8'));
-  } catch(err) {
+  } catch {
     console.error(`Invalid env config file: ${envConfigFilepath}`);
     process.exit(1);
   }
@@ -61,7 +61,7 @@ function loadYAMLConfig(ENV) {
 
   try {
     app = YAML.parse(fs.readFileSync(appConfigFilepath, 'utf-8'));
-  } catch(err) {
+  } catch {
     console.error(`Invalid app config file: ${appConfigFilepath}`);
     process.exit(1);
   }

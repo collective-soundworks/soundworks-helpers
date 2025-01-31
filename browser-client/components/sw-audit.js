@@ -4,6 +4,8 @@ function padLeft(value, size) {
   let str = value + ''; // cast to string
 
   while (str.length < size) {
+    // we really want an non-breaking space here
+    // eslint-disable-next-line no-irregular-whitespace
     str = ` ${str}`;
   }
 
