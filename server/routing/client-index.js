@@ -54,16 +54,6 @@ export const clientIndex = (clientRole, serverConfig) => {
 
     const htmlIndex = generateHtmlIndex(clientConfig);
 
-    // Headers for crossOriginIsolated pages: enables `sharedArrayBuffers` and high precision timers
-    // cf. https://web.dev/why-coop-coep/
-    if (serverConfig.env.crossOriginIsolated) {
-      res.set({
-        'Cross-Origin-Resource-Policy': 'same-origin',
-        'Cross-Origin-Embedder-Policy': 'require-corp',
-        'Cross-Origin-Opener-Policy': 'same-origin',
-      });
-    }
-
     res.end(htmlIndex);
   };
 };

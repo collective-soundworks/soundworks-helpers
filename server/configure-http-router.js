@@ -37,6 +37,20 @@ export default async function configureHttpRouter(server) {
   const router = express();
   router.use(compression());
 
+  // middleware for crossOriginIsolated Headers: cf. https://web.dev/why-coop-coep/
+  // enables `sharedArrayBuffers` and high precision timers
+  router.use((_, res, next) => {
+    if (server.config.env.crossOriginIsolated) {
+      res.set({
+        'Cross-Origin-Resource-Policy': 'same-origin',
+        'Cross-Origin-Embedder-Policy': 'require-corp',
+        'Cross-Origin-Opener-Policy': 'same-origin',
+      });
+    }
+
+    next();
+  });
+
   // create route for each browser client
   for (let [clientRole, clientDescription] of Object.entries(server.config.app.clients)) {
     if (clientDescription.runtime === 'node') {
