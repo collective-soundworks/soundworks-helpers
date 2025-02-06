@@ -115,7 +115,6 @@ function renderLaunchScreens(client, $container) {
     }
 
     if (allStarted) {
-      console.log('remove launcher');
       // all started, remove &launcher view
       $launcher.parentNode.removeChild($launcher);
       return;
