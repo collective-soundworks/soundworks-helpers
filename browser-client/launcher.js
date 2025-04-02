@@ -231,11 +231,15 @@ const browserLauncher = {
       // @note - we use raw lit-html and style injection to avoid problems
       // with shadow DOM, scoped styles and so on... As this is a development
       // tool only, we don't really care of hardcoding things here
+      $container.classList.add('emulated');
 
-      // create dynamic stylesheet
-      var style = document.createElement('style');
-      style.type = 'text/css';
+      const style = document.createElement('style');
       style.innerText = `
+        body.emulated {
+          display: flex;
+          flex-direction: row;
+        }
+
         .emulated-client-container {
           float: left;
           width: ${width};
