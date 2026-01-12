@@ -89,8 +89,8 @@ class SwSPluginPosition extends LitElement {
         style="
           width: ${mapContainerWidth}px;
           height: ${mapContainerHeight}px;
-          --sc-dots-background-image: ${backgroundImage ? `url(${backgroundImage})` : 'none'};
-          --sc-dots-background-color: var(--sc-color-primary-1);
+          background-image: ${backgroundImage ? `url(${backgroundImage})` : 'none'};
+          background-color: var(--sc-color-primary-1);
         "
         x-range="${JSON.stringify(xRange)}"
         y-range="${JSON.stringify(yRange)}"
@@ -99,8 +99,7 @@ class SwSPluginPosition extends LitElement {
         persist-events
         max-size="1"
         @input="${this._onUpdatePosition}"
-      >
-      </sc-dots>
+      ></sc-dots>
       <section
         class="command-container"
         style="
