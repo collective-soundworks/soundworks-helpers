@@ -27,7 +27,9 @@ function generateHtmlIndex(clientConfig) {
 }
 
 function getClientConfig(clientRole, serverConfig) {
-  return {
+  // Filter out config that are not needed by the clients, such as password
+  // defined in `config.env`
+  const clientConfig = {
     role: clientRole,
     app: {
       name: serverConfig.app.name,
@@ -41,6 +43,19 @@ function getClientConfig(clientRole, serverConfig) {
       baseUrl: serverConfig.env.baseUrl,
     },
   };
+
+  // Pass every other config information added on the application side.
+  // This may be required to e.g. configure a plugin on the client side before
+  // we can create a shared state that contains the information
+  // (cf. set `randomize` option depending on a project configuration file in
+  // the position plugin
+  for (let name in serverConfig) {
+    if (name !== 'app' && name !== 'env') {
+      clientConfig[name] = serverConfig[name]
+    }
+  }
+
+  return clientConfig;
 }
 
 export const clientIndex = (clientRole, serverConfig) => {
