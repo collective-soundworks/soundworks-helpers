@@ -51,7 +51,7 @@ function getClientConfig(clientRole, serverConfig) {
   // the position plugin
   for (let name in serverConfig) {
     if (name !== 'app' && name !== 'env') {
-      clientConfig[name] = serverConfig[name]
+      clientConfig[name] = serverConfig[name];
     }
   }
 
