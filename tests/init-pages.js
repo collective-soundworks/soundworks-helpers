@@ -28,6 +28,8 @@ if (!fs.existsSync(appPath)) {
   process.exit(0);
 }
 
+fs.rmSync(path.join(appPath, 'node_modules'), { recursive: true, force: true });
+
 if (!fs.existsSync(path.join(appPath, 'node_modules'))) {
   console.log('> Installing deps');
 

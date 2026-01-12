@@ -48,7 +48,7 @@ server.pluginManager.register('position-yrange', ServerPluginPosition, {
 });
 
 server.pluginManager.register('position-background', ServerPluginPosition, {
-  backgroundImage: 'images/seating-map.png',
+  backgroundImage: 'public/images/seating-map.png',
 });
 await server.start();
 
