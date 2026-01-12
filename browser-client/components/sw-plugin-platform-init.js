@@ -1,6 +1,5 @@
 import { LitElement, html, css } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 
 class SwPluginPlatformInit extends LitElement {
   static get properties() {
@@ -96,7 +95,7 @@ class SwPluginPlatformInit extends LitElement {
       };
 
       return html`
-        <div class="${classMap(classes)}" @click="${ifDefined(listener)}">
+        <div class="${classMap(classes)}" @click="${listener}">
           <sw-header name="${name}" author="${author}"></sw-header>
           <!-- @todo - replace w/ a component so that we can have a fixed height -->
           <p>${msg}</p>
@@ -109,7 +108,7 @@ class SwPluginPlatformInit extends LitElement {
     super.connectedCallback();
 
     if (customElements.get('sw-header') === undefined || customElements.get('sw-plugin-error') === undefined) {
-      throw new Error('[@soundworks/plugin-platform-init] sw-header and sw-plugin-error not found in customElements registery, the @soundworks/helpers should be imported');
+      throw new Error('[@soundworks/plugin-platform-init] sw-header and sw-plugin-error not found in customElements registry, the @soundworks/helpers should be imported');
     }
   }
 }
