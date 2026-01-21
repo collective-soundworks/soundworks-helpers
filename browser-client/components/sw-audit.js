@@ -31,6 +31,7 @@ class SwAudit extends LitElement {
     this.client = null;
     this._auditState = null;
     this._numClientsString = '';
+    this.filter = null;
   }
 
   async connectedCallback() {
@@ -43,8 +44,13 @@ class SwAudit extends LitElement {
         const numClients = this._auditState.get('numClients');
 
         for (let role in numClients) {
-          const str = `${role}: ${padLeft(numClients[role], 2)}`;
-          numClientsStrings.push(str);
+          if (
+            this.filter === null ||
+            (Array.isArray(this.filter) && this.filter.includes(role))
+          ) {
+            const str = `${role}: ${padLeft(numClients[role], 2)}`;
+            numClientsStrings.push(str);
+          }
         }
 
         this._numClientsString = numClientsStrings.join(' - ');
