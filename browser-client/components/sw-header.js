@@ -10,15 +10,10 @@ class SwAppHeader extends LitElement {
 
   static get styles() {
     return css`
-      :host {
-        font-family: Consolas, monaco, monospace;
-      }
-
       .name {
         font-size: 3rem;
         line-height: 5rem;
         text-align: center;
-        font-family: Consolas, monaco, monospace;
         font-weight: normal;
         display: var(--title-display, block);
       }
