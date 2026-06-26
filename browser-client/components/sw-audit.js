@@ -5,7 +5,6 @@ function padLeft(value, size) {
 
   while (str.length < size) {
     // we really want an non-breaking space here
-    // eslint-disable-next-line no-irregular-whitespace
     str = ` ${str}`;
   }
 
